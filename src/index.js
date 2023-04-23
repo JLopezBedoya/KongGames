@@ -7,7 +7,7 @@ function App(){
       <h1>Tienda KongGames</h1>
       <h2>Scrum master: Jorge Lopez</h2>
       <h2>Desarrolladores:</h2>
-      <h2>-miguel</h2>
+      <h2>-Miguel Perez</h2>
       <h2>-Dylan cardenas</h2>
     </div>
   )
