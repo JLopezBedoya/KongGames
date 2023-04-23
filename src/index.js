@@ -10,6 +10,7 @@ function App(){
       <h2>-Miguel Perez</h2>
       <h2>-Dylan cardenas</h2>
       <h2>-Carlos Quintero -</h2>
+      <h2>-kenner rocha</h2>
     </div>
   )
 }
