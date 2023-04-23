@@ -8,6 +8,7 @@ function App(){
       <h2>Scrum master: Jorge Lopez</h2>
       <h2>Desarrolladores:</h2>
       <h2>-miguel</h2>
+      <h2>-Dylan cardenas</h2>
     </div>
   )
 }
