@@ -8,7 +8,7 @@ function App(){
       <h2>Scrum master: Jorge Lopez</h2>
       <h2>Desarrolladores:</h2>
       <h2>-Miguel Perez</h2>
-      <h2>-Dylan cardenas</h2>
+      <h2>-Dylan Cardenas</h2>
       <h2>-Carlos Quintero</h2>
       <h2>-kenner rocha</h2>
     </div>
