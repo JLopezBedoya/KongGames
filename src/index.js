@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-//<h2>-'nombre'</h2>
 function App(){
   return(
     <div>
