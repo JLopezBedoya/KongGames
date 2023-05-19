@@ -1,9 +1,8 @@
-//Jorge Lopez
-import { DisplayOptions } from './index'
-import './CSS/tienda.css'
-export function Tienda({estado}){
+import { useSelector } from 'react-redux'
+export function Tienda(){
+    const {mostrar} = useSelector((state)=>state.mostrando)
     return(
-        <div className="tienda" style={estado[2] ? DisplayOptions[0]: DisplayOptions[1]}>
+        <div className="tienda" style={{display:mostrar[2]}}>
             <h1>Soy la Tienda</h1>
         </div>
     )

@@ -1,10 +1,9 @@
-//Kenner Rocha
-import { DisplayOptions } from './index'
-import './CSS/bodega.css'
-export function Bodega({estado}){
+import { useSelector } from 'react-redux'
+export function Bodega(){
+    const {mostrar} = useSelector((state)=>state.mostrando)
     return(
-        <div className="bodega" style={estado[3] ? DisplayOptions[0]: DisplayOptions[1]}>
-            <h1>Soy la bodega</h1>
+        <div className="bodega" style={{display: mostrar[3]}}>
+            <h1>Soy el bodega</h1>
         </div>
     )
 }
