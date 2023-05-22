@@ -6,16 +6,16 @@ const userSlice = createSlice({
         id: "0"
     },
     reducers:{
-        loggear:(estado,action)=>{
+        logear:(estado,action)=>{
             const {nombre, id} = action.payload
             estado.nombre = nombre
             estado.id = id
         },
-        deslogggear:(estado,action)=>{
+        deslogear:(estado)=>{
             estado.nombre = "nombre"
             estado.id = "0"
         }
     }
 })
-export const {deslogggear, loggea } = userSlice.actions;
+export const {logear,deslogear } = userSlice.actions;
 export default userSlice.reducer;

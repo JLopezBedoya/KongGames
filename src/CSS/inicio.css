@@ -1,0 +1,18 @@
+*::-webkit-scrollbar {
+    display: none;
+  }
+
+.list-group-item{
+  --bs-list-group-bg: rgba(33, 37, 41, 0.8);
+  --bs-list-group-color: white;
+}
+#under{
+  --bs-gutter-x: 0;
+  width: 100%;
+  
+}
+.portadas{
+  width: "200px";
+  height: "270px";
+}
+  

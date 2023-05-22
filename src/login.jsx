@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { cambiar } from "./redux/mostrarslice";
+import { logear } from './redux/usuarioSlice';
 
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -142,6 +142,7 @@ function Unloggin(){
 }
 function Formulario({tipo, usuario}) {
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch()
   const username = useRef()
   const pssword = useRef()
 
@@ -149,19 +150,32 @@ function Formulario({tipo, usuario}) {
   const handleShow = () => setShow(true);
   const handleDatos = () =>{
     if(usuario==="Administrador"){
-      console.log("Administrador")
-      console.log(username.current.value);
-      console.log(pssword.current.value);
+        if(username.current.value==="pizza" && pssword.current.value==="sinpiña"){
+          handleClose()
+          dispatch(cambiar(1))
+          dispatch(logear({nombre:"Admin", id:"1"}))
+        }
+        else{
+          alert("Usuario y/o Contraseña incorrecta para admin")
+        }
+    }else if(usuario==="Vendedor"){
+      if(username.current.value==="pineapple" && pssword.current.value==="on pizza"){
+        handleClose()
+        dispatch(cambiar(1))
+        dispatch(logear({nombre:"343", id:"3"}))
+      }
+      else{
+        alert("Usuario y/o Contraseña incorrecta para distribuidor")
+      }
+  }else if(usuario==="Cliente"){
+    if(username.current.value==="piña" && pssword.current.value==="con pizza"){
+      handleClose()
+      dispatch(cambiar(1))
+      dispatch(logear({nombre:"Random", id:"2"}))
     }
-    else if(usuario==="Vendedor"){
-      console.log("Vendedor")
-      console.log(username.current.value);
-      console.log(pssword.current.value);
+    else{
+      alert("Usuario y/o Contraseña incorrecta para cliente")
     }
-    else if(usuario==="Cliente"){
-      console.log("Cliente")
-      console.log(username.current.value);
-      console.log(pssword.current.value);
     }
   }
   return (
