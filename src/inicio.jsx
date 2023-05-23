@@ -13,11 +13,11 @@ import Col from 'react-bootstrap/Col';
 import reciente from './assets/tloztotk.webp'
 import './CSS/inicio.css';
 import { useState } from 'react';
-const navStart = {
+export const navStart = {
     borderRadius: "20px",
     backgroundColor: "rgba(33, 37, 41, 0.8)"
 }
-const titulo = {
+export const titulo = {
     color: "white",
     fontSize: "30px",
     fontWeight: "bold",
@@ -187,7 +187,7 @@ function NavStart(){
             <Container>
             <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
             <Nav className="d-flex">
-                <Nav.Link><Button variant="danger" onClick={()=>dispatch(cambiar(0))}>Cerrar sesion</Button></Nav.Link>
+                <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
                 <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>Biblioteca</Button></Nav.Link>
                 <Nav.Link><Button variant="light" onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>

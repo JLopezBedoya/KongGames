@@ -159,7 +159,7 @@ function Formulario({tipo, usuario}) {
           alert("Usuario y/o Contraseña incorrecta para admin")
         }
     }else if(usuario==="Vendedor"){
-      if(username.current.value==="pineapple" && pssword.current.value==="on pizza"){
+      if(username.current.value==="pizza" && pssword.current.value==="sinpiña"){
         handleClose()
         dispatch(cambiar(1))
         dispatch(logear({nombre:"343", id:"3"}))
@@ -168,7 +168,7 @@ function Formulario({tipo, usuario}) {
         alert("Usuario y/o Contraseña incorrecta para distribuidor")
       }
   }else if(usuario==="Cliente"){
-    if(username.current.value==="piña" && pssword.current.value==="con pizza"){
+    if(username.current.value==="pizza" && pssword.current.value==="sinpiña"){
       handleClose()
       dispatch(cambiar(1))
       dispatch(logear({nombre:"Random", id:"2"}))

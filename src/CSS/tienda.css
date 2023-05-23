@@ -1,0 +1,11 @@
+div.card-body{
+    padding: 0;
+    background-color:  rgba(33, 37, 41, 0.8);
+    --bs-card-bg: rgba(0,0,0,0);
+}
+.offcanvas-header, .offcanvas-body{
+    background-color: rgb(33, 37, 41);
+}
+.otro{
+    color: white;
+}
