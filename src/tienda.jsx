@@ -1,5 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef } from 'react';
+import { filtro, titulo, navStart } from './inicio';
+import { cambiar } from "./redux/mostrarslice";
+import { deslogear } from './redux/usuarioSlice';
+import { add } from './redux/carritoslice';
+
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/mgs.jpg';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,13 +14,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Card from 'react-bootstrap/Card';
-import { filtro } from './inicio';
 import Select from 'react-select';
 import Nav from 'react-bootstrap/Nav';
-import { navStart } from './inicio';
-import { cambiar } from "./redux/mostrarslice";
-import { deslogear } from './redux/usuarioSlice';
-import { titulo } from './inicio';
+
 import './CSS/tienda.css';
 
 const tarjetas = {
@@ -74,7 +75,7 @@ export function Tienda(){
                         <div style={jzona}>
                             <Row>
                                 {a.map((e,i)=>(
-                                    <Juegos key={i} enmuestra={busqueda} />
+                                    <Juegos key={i} enmuestra={busqueda} iu={i} />
                                 ))}
                             </Row>
                         </div>
@@ -123,10 +124,9 @@ function StoreNavBar({busqueda}){
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
             </Nav>
             <Nav className="d-flex">
-                <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+                <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
                 <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Usuarios</Button></Nav.Link>
             </Nav>
             </Container>
         </Navbar>
@@ -142,7 +142,7 @@ function StoreNavBar({busqueda}){
         </Nav>
         
         <Nav className="d-flex">
-            <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
             <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
             <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
         </Nav>
@@ -159,7 +159,7 @@ function StoreNavBar({busqueda}){
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
             </Nav>
             <Nav className="d-flex">
-                <Nav.Link><Button variant="danger" onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
+                <Nav.Link><Button variant="danger"  onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(0))}>Registrarse</Button></Nav.Link>
             </Nav>
             </Container>
@@ -167,18 +167,22 @@ function StoreNavBar({busqueda}){
         )
     }
 }
-function Juegos({enmuestra}){
+function Juegos({iu}){
     const [compra, setCompra] = useState(false)
-    const carrito = "https://cdn.mobygames.com/268e90f0-aba2-11ed-bd13-02420a00019c.webp"
+    const carrito = "https://cdn.mobygames.com/268e90f0-aba2-11ed-bd13-02420a00019c.webp";
+    const dispatch = useDispatch()
     const userHover = () =>{
         setCompra(true)
     }
     const noUserHover = () =>{
         setCompra(false)
     }
+    const agg = () =>{
+         dispatch(add(iu))
+    }
     return(
         <Col md={3}>
-            <Card style={tarjetas} onMouseEnter={userHover} onMouseLeave={noUserHover} className='tarjeta'>
+            <Card style={tarjetas} onMouseEnter={userHover} onMouseLeave={noUserHover} onClick={agg} className='tarjeta'>
             <Card.Img style={cover} variant="top" src={compra? carrito:"https://upload.wikimedia.org/wikipedia/en/b/b4/Halo_3_final_boxshot.JPG"} />
             <Card.Body>
               <Card.Title style={jnombre} >The legend of zelda tears of the Kingdom</Card.Title>
@@ -192,40 +196,52 @@ function Jfiltros({filtros}){
     const [Rprecio, setRprecio] = useState(0);
     const [Rpunt, setRpunt] = useState(0);
 
-    const distri = useRef();
-    const gen = useRef();
-    const platf = useRef();
+    const distri = useRef(null);
+    const cat = useRef(null);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handlerprecio = ({target}) => setRprecio(target.value)
     const handlerpunt = ({target}) => setRpunt(target.value)
     const handlerDatos = () =>{
-        var filgen = gen.current.state.selectValue.map((e)=>(e.value))
-        var filptf = platf.current.state.selectValue.map((e)=>(e.value))
+        var filcat;
+        if((distri!=null)&&(cat!=null)){
+        filcat = cat.current.state.selectValue.map((e)=>(e.value))
         filtros({
-            distribuidor: distri.current.state.selectValue[0].value,
-            generos: filgen,
-            plataformas: filptf,
+            Marcas: distri.current.state.selectValue[0].value,
+            categorias: filcat,
             puntuacion: Rpunt,
             precio: Rprecio
         })
+        }else if(distri!=null){
+            filtros({
+                Marcas: distri.current.state.selectValue[0].value,
+                categorias: [],
+                puntuacion: Rpunt,
+                precio: Rprecio
+            })
+        }else{
+            filcat = cat.current.state.selectValue.map((e)=>(e.value))
+            filtros({
+                Marcas: "ninguna",
+                categorias: filcat,
+                puntuacion: Rpunt,
+                precio: Rprecio
+            })
+        }
     }
-    const generos = [
-        {value: "accion", label: "Accion"},
-        {value: "Terror", label: "Terror"},
-        {value: "Deporte", label: "Deporte"},
-        {value: "Conduccion", label: "Conduccion"}]
+    const categorias = [
+        {value: "deportivos", label: "deportivos"},
+        {value: "botas", label: "botas"},
+        {value: "infantiles", label: "infantiles"},
+        {value: "elegantes", label: "elegantes"},
+        {value: "casuales", label: "casuales"},
+    ]
     const distribuidores = [
             {value: "Bethesda", label: "Bethesda"},
             {value: "Devolver", label: "Devolver"},
             {value: "FromSoftware", label: "FromSoftware"},
             {value: "RockStar", label: "RockStar"}]
-    const plataformas = [
-                {value: "ps4", label: "PlayStation 4"},
-                {value: "xone", label: "Xbox One"},
-                {value: "series", label: "Xbox Series S/X"},
-                {value: "ps5", label: "PlayStation 5"}]
     return(
         <div>
         <Button variant="info" onClick={handleShow}>Ver filtros</Button>
@@ -236,9 +252,8 @@ function Jfiltros({filtros}){
         <Offcanvas.Body>
         <Form>
             <Form.Group className="mb-3">
-                <Select className='my-4' ref={distri} placeholder="Distribuidores" isClearable={true} options={distribuidores}/>
-                <Select className='mb-4' ref={gen} placeholder="Generos" isMulti options={generos}/>
-                <Select className='mb-4' ref={platf} placeholder="Plataformas" isMulti options={plataformas}/>
+                <Select className='my-4' ref={distri} placeholder="Marcas" isClearable={true} options={distribuidores}/>
+                <Select className='mb-4' ref={cat} placeholder="categorias" isMulti options={categorias}/>
                 <Form.Label className="otro">Rango de precio: {Rprecio} </Form.Label>
                 <Form.Range defaultValue={Rprecio} min={10} max={150} onChange={handlerprecio}/>
                 <Form.Label className='otro my-4'>Rango de puntuacion: {Rpunt}</Form.Label>

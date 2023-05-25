@@ -1,16 +1,16 @@
 {
-    "juegos":{
+    "Zapatos":{
         "id":{
             "id": "0000",
-            "nombre": "elden ring",
-            "desarrolladora": "From Sofware",
-            "genero": ["aventura","accion","exploracion"],
+            "nombre": "NomreRandomDeZapato",
+            "Marca": "MarcaConNomreRandom",
             "punuacion": 9,
-            "fechaLanzamieno": "10/10/2021",
             "ventas": 5495929,
             "fechaAñadida": "x/y/2023",
-            "precio": 207000,
-            "plataformas": ["ps4","ps5","One","Series S/X"]
+            "precio": 85000,
+            "Cantidad": 200,
+            "Categoria": ["deportivo"]
         }
-    }
+    },
+    "Categoria": ["deportivo", "elegante", "casuales","botas","infantiles"]
 }

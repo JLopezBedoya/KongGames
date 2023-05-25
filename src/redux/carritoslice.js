@@ -2,16 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 const carritoSlice = createSlice({
     name: "carrito",
     initialState: {
-        compras: []
+        save: []
     },
     reducers:{
         add:(estado, action)=>{
             const id = action.payload
-            estado.compras.push(id)
+            estado.save.push(id)
         },
         remove:(estado,action)=>{
             const id = action.payload
-            estado.compras.splice(id,1)
+            estado.save.splice(id,1)
         }
     }
 })

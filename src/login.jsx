@@ -88,7 +88,7 @@ function Cliente(){
           <Card.Title style={centrar} id='cliente' >COMO CLIENTE</Card.Title>
           <Card.Text style={tarjetaBody}>
             Se tiene acceso al carrito y a la biblioteca donde
-            se almacenan los juegos comprados
+            se almacenan los zapatos comprados
             </Card.Text>
             <Formulario tipo={"success"} usuario={"Cliente"}/>
         </Card.Body>
@@ -103,7 +103,7 @@ function Admin(){
           <Card.Title style={centrar} id="admin">COMO ADMINISTRADOR</Card.Title>
           <Card.Text style={tarjetaBody}>
             se tiene acceso a la bodega donde se pueden añadir, modificar y borrar
-            los juegos ya existentes, mas opciones pronto...
+            los zapatos ya existentes, mas opciones pronto...
             </Card.Text>
           <Formulario tipo={"danger"} usuario={"Administrador"}/>
         </Card.Body>
@@ -115,9 +115,9 @@ function Vendedor(){
         <Card style={tarjetaLogin}>
         <Card.Img variant="top" src={vendedor} />
         <Card.Body>
-          <Card.Title style={centrar} id="vendedor">COMO VENDEDOR</Card.Title>
+          <Card.Title style={centrar} id="vendedor">COMO MARCA</Card.Title>
           <Card.Text style={tarjetaBody}>
-                puedes añadir, modificar y eliminar los juegos que hayas
+                puedes añadir, modificar y eliminar los Zapatos que hayas
                 Subido como distribuidor, mas opciones pronto...
             </Card.Text>
           <Formulario tipo={"primary"} usuario={"Vendedor"}/>

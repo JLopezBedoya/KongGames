@@ -1,18 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { cambiar } from "./redux/mostrarslice";
 import { deslogear } from './redux/usuarioSlice';
+import { useState } from 'react';
 
 import Container from 'react-bootstrap/Container';
-import fondo from './assets/login.png';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
+
 import reciente from './assets/tloztotk.webp'
+import fondo from './assets/login.png';
+
 import './CSS/inicio.css';
-import { useState } from 'react';
+
 export const navStart = {
     borderRadius: "20px",
     backgroundColor: "rgba(33, 37, 41, 0.8)"
@@ -164,8 +167,8 @@ export function Inicio(){
                             <BannerStart/>
                             <Row id="under">
                                 <Col md={4}><Under tipo={"Mas vendidos"} url={"https://cdn.mobygames.com/22778766-ab8d-11ed-be6f-02420a000197.webp"}/></Col>
-                                <Col md={4}><Under tipo={"lanzamientos recientes"} url={reciente}/></Col>
-                                <Col md={4}><Under tipo={"Ultimos añadidos"} url={"https://upload.wikimedia.org/wikipedia/en/b/b4/Halo_3_final_boxshot.JPG"}/></Col>
+                                <Col md={4}><Under tipo={"Ultimos añadidos"} url={reciente}/></Col>
+                                <Col md={4}><Under tipo={"Ultimas Unidades"} url={"https://upload.wikimedia.org/wikipedia/en/b/b4/Halo_3_final_boxshot.JPG"}/></Col>
                             </Row>
                         </Row>
                     </Col>
@@ -185,12 +188,12 @@ function NavStart(){
         return(
             <Navbar style={navStart}>
             <Container>
-            <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+            <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav className="d-flex">
-                <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+                <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
                 <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>Biblioteca</Button></Nav.Link>
-                <Nav.Link><Button variant="light" onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>
+                <Nav.Link><Button variant="light"   onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>
             </Nav>
             </Container>
         </Navbar>
@@ -200,12 +203,12 @@ function NavStart(){
         return(
             <Navbar style={navStart}>
             <Container>
-            <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+            <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav className="d-flex">
-                <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+                <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
                 <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Usuarios</Button></Nav.Link>
+                <Nav.Link><Button variant="info" onClick={()=>dispatch(cambiar(3))}>Usuarios</Button></Nav.Link>
             </Nav>
             </Container>
         </Navbar>
@@ -214,9 +217,9 @@ function NavStart(){
         return(
         <Navbar style={navStart}>
         <Container>
-        <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+        <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
         <Nav className="d-flex">
-            <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
             <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
             <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
         </Nav>
@@ -227,10 +230,12 @@ function NavStart(){
         return(
             <Navbar style={navStart}>
             <Container>
-            <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+            <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav className="d-flex">
-                <Nav.Link><Button variant="danger" onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
+                <Nav.Link><Button variant="danger"  onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(0))}>Registrarse</Button></Nav.Link>
+                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>tienda</Button></Nav.Link>
+
             </Nav>
             </Container>
         </Navbar>
@@ -248,7 +253,7 @@ function BannerStart(){
     return(
         <div style={contBanner}>
             <div onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? bannerName: bannerOff}>
-                <p>Proximamente: Hollow knight Silksong</p>
+                <p>Marca: KongShoes</p>
             </div>
         </div>
     )
