@@ -3,8 +3,9 @@ import { useState, useRef } from 'react';
 import { filtro, titulo, navStart } from './inicio';
 import { cambiar } from "./redux/mostrarslice";
 import { deslogear } from './redux/usuarioSlice';
-import { add } from './redux/carritoslice';
+import { add, clear } from './redux/carritoslice';
 
+import { RegistrarMarca, Registrarse } from './login';
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/mgs.jpg';
 import Navbar from 'react-bootstrap/Navbar';
@@ -16,7 +17,6 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Card from 'react-bootstrap/Card';
 import Select from 'react-select';
 import Nav from 'react-bootstrap/Nav';
-
 import './CSS/tienda.css';
 
 const tarjetas = {
@@ -55,6 +55,13 @@ const options = [
     { value: 'strawberry', label: 'Strawberry' },
     { value: 'vanilla', label: 'Vanilla' }
   ]
+export const categorias = [
+    {value: "deportivos", label: "deportivos"},
+    {value: "botas", label: "botas"},
+    {value: "infantiles", label: "infantiles"},
+    {value: "elegantes", label: "elegantes"},
+    {value: "casuales", label: "casuales"},
+]
 export function Tienda(){
     const [busqueda, setBusqueda] = useState("Todos")
     const a = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
@@ -86,7 +93,7 @@ export function Tienda(){
     )
 }
 
-//Barra de Navegacion
+
 function StoreNavBar({busqueda}){
     const [filtrados, setFiltrados] = useState({})
     const dispatch = useDispatch()
@@ -107,7 +114,7 @@ function StoreNavBar({busqueda}){
             <Nav className="d-flex">
                 <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>Biblioteca</Button></Nav.Link>
+                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(5))}>Biblioteca</Button></Nav.Link>
                 <Nav.Link><Button variant="light" onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>
             </Nav>
             </Container>
@@ -142,7 +149,7 @@ function StoreNavBar({busqueda}){
         </Nav>
         
         <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}>Cerrar sesion</Button></Nav.Link>
             <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
             <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
         </Nav>
@@ -153,13 +160,15 @@ function StoreNavBar({busqueda}){
         return(
             <Navbar style={navStart}>
             <Container>
-            <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+            <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
                 <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={options} /></Nav.Link>
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
             </Nav>
             <Nav className="d-flex">
+                <RegistrarMarca/>
                 <Nav.Link><Button variant="danger"  onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
+                <Registrarse/>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(0))}>Registrarse</Button></Nav.Link>
             </Nav>
             </Container>
@@ -230,13 +239,7 @@ function Jfiltros({filtros}){
             })
         }
     }
-    const categorias = [
-        {value: "deportivos", label: "deportivos"},
-        {value: "botas", label: "botas"},
-        {value: "infantiles", label: "infantiles"},
-        {value: "elegantes", label: "elegantes"},
-        {value: "casuales", label: "casuales"},
-    ]
+
     const distribuidores = [
             {value: "Bethesda", label: "Bethesda"},
             {value: "Devolver", label: "Devolver"},

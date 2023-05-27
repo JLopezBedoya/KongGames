@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const mostrarSlice = createSlice({
     name: "mostrar",
     initialState: {
-        mostrar: ["block","none","none","none","none"]
+        mostrar: ["block","none","none","none","none","none"]
     },
     reducers:{
         cambiar:(estado,action)=>{

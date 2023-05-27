@@ -15,4 +15,21 @@
   width: "200px";
   height: "270px";
 }
-  
+.modal-content{
+    --bs-modal-bg: rgb(33, 37, 41);
+}
+.formulario{
+    width: 100%;
+    height: 100%;
+}
+.loginicon{
+    max-width: 150px;
+    border-radius: 70px;
+    margin: 20px 175px;
+    
+}
+.titulogin{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { filtro, titulo, navStart } from './inicio';
 import { cambiar } from "./redux/mostrarslice";
 import { deslogear } from './redux/usuarioSlice';
-import { remove } from './redux/carritoslice';
+import { remove, clear } from './redux/carritoslice';
 
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/mgs.jpg';
@@ -93,9 +93,9 @@ function CarritoNav(){
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
         <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}>Cerrar sesion</Button></Nav.Link>
             <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>Biblioteca</Button></Nav.Link>
+            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(5))}>Biblioteca</Button></Nav.Link>
             <Nav.Link><Button variant="light"   onClick={()=>dispatch(cambiar(1))}>Inicio</Button></Nav.Link>
         </Nav>
         </Container>
@@ -148,6 +148,7 @@ function Compras({datos, iu}){
     )
 }
 function Info(){
+    const dispatch = useDispatch()
     return(
         <div style={panel}>
             <h3 style={{textAlign: "center", marginTop: "15px"}}>Informacion de compra</h3>
@@ -173,7 +174,7 @@ function Info(){
                     <Row>
                     <ButtonGroup vertical>
                         <Button variant="success">Comprar Todo</Button>
-                        <Button variant="danger">Vaciar carrito</Button>
+                        <Button onClick={()=>dispatch(clear())} variant="danger">Vaciar carrito</Button>
                     </ButtonGroup>
                 </Row>
                 </Col>

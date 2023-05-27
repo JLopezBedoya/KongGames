@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { cambiar } from "./redux/mostrarslice";
 import { deslogear } from './redux/usuarioSlice';
-import { useState } from 'react';
-
+import React, { useState } from 'react';
+import { clear } from './redux/carritoslice';
+import { RegistrarMarca, Registrarse } from './login';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -10,10 +11,10 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
 
 import reciente from './assets/tloztotk.webp'
 import fondo from './assets/login.png';
-
 import './CSS/inicio.css';
 
 export const navStart = {
@@ -192,7 +193,7 @@ function NavStart(){
             <Nav className="d-flex">
                 <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
                 <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>Biblioteca</Button></Nav.Link>
+                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(5))}>Biblioteca</Button></Nav.Link>
                 <Nav.Link><Button variant="light"   onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>
             </Nav>
             </Container>
@@ -219,7 +220,7 @@ function NavStart(){
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
         <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
+            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}>Cerrar sesion</Button></Nav.Link>
             <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
             <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
         </Nav>
@@ -232,10 +233,10 @@ function NavStart(){
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav className="d-flex">
-                <Nav.Link><Button variant="danger"  onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
-                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(0))}>Registrarse</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>tienda</Button></Nav.Link>
-
+                <RegistrarMarca/>
+                <Nav.Link><Button variant="info" onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
+                <Registrarse/>
+                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>tienda</Button></Nav.Link>
             </Nav>
             </Container>
         </Navbar>
@@ -244,6 +245,12 @@ function NavStart(){
 }
 function BannerStart(){
     const [hover, setHover] = useState(false)
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handlerShow = () =>{
+        setShow(true)
+    }
     const userHover=()=>{
         setHover(true)
     }
@@ -252,9 +259,20 @@ function BannerStart(){
     }
     return(
         <div style={contBanner}>
-            <div onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? bannerName: bannerOff}>
+            <div onClick={handlerShow} onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? bannerName: bannerOff}>
                 <p>Marca: KongShoes</p>
             </div>
+            <Modal size="lg" show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <h1 style={{color:"white"}}>KongShoes</h1>
+                    </Modal.Header>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+            </Modal>
         </div>
     )
 }
@@ -272,6 +290,12 @@ function Under({tipo, url}){
         backgroundRepeat: "no-repeat",
         cursor: "pointer",
     }
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handlerShow = () =>{
+        setShow(true)
+    }
     const [hover, setHover] = useState(false)
     const userHover=()=>{
         setHover(true)
@@ -281,14 +305,30 @@ function Under({tipo, url}){
     }
     return(
         <div style={cover}>
-            <div onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? underFiltro:underFiltroff}>
+            <div onClick={handlerShow}  onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? underFiltro:underFiltroff}>
                 <p style={underText}>{tipo}</p>
             </div>
+            <Modal size="lg" show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <h1 style={{color:"white"}}>{tipo}</h1>
+                    </Modal.Header>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+            </Modal>
         </div>
     )
 }
 function Mejor(){
     const [hover, setHover] = useState(false)
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handlerShow = () =>{
+        setShow(true)
+    }
     const userHover=()=>{
         setHover(true)
     }
@@ -297,9 +337,20 @@ function Mejor(){
     }
     return(
         <div style={valorado}>
-            <div onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? valoradoFiltro:valoradoFiltroff}>
+            <div onClick={handlerShow} onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? valoradoFiltro:valoradoFiltroff}>
                 <p>Mejores Valorados</p>
             </div>
+            <Modal size="lg" show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <h1 style={{color:"white"}}>Mejores Puntuados</h1>
+                    </Modal.Header>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+            </Modal>
         </div>
     )
 }

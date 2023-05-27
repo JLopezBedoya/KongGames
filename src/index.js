@@ -7,6 +7,7 @@ import {Inicio } from './inicio';
 import { Tienda } from './tienda';
 import { Carrito } from './carrito';
 import { Bodega } from './bodega';
+import { Biblioteca } from './biblioteca';
 import 'bootstrap/dist/css/bootstrap.min.css';
 function App(){
   return(
@@ -16,6 +17,7 @@ function App(){
       <Tienda/>
       <Carrito/>
       <Bodega/>
+      <Biblioteca/>
     </div>
   )
 }

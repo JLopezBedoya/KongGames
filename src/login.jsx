@@ -12,6 +12,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 import fondo from './assets/btf.jpg';
 import cliente from './assets/link.jpg';
@@ -133,7 +134,9 @@ function Unloggin(){
           <Navbar.Brand></Navbar.Brand>
           <Nav className="justify-content-end">
             <h1 className='titulo'>COMO DESEA INGRESAR?</h1>
+            <Registrarse/>
             <Nav.Link><Button variant="success" onClick={()=>dispatch(cambiar(1))}>inicio</Button></Nav.Link>
+            <RegistrarMarca/>
             <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>tienda</Button></Nav.Link>
           </Nav>
         </Container>
@@ -185,23 +188,241 @@ function Formulario({tipo, usuario}) {
       <div className='formulario'>
         <img className="loginicon" src={icono} alt="..."/>
         <h2 className='titulogin'>Bienvenido {usuario} </h2>
-        <Form style={{padding: "20px"}}>
-          <Form.Group className="mb-3" controlId="username">
+        <Form style={{padding: "10px"}}>
+          <Form.Group className="mb-2" controlId="username">
           <Form.Label style={{color:"white"}}>Nombre del usuario</Form.Label>
           <Form.Control ref={username} type="text" placeholder="Su nombre" />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="password">
+          <Form.Group className="mb-2" controlId="password">
           <Form.Label style={{color:"white"}}>Contraseña del usuario</Form.Label>
           <Form.Control ref={pssword} type="password" placeholder="Su contraseña" />
           </Form.Group>
           <Row style={{padding: "20px"}}>
-          <Button onClick={handleDatos} variant={"success"}>Comprobar</Button>
-          <Button onClick={handleClose} variant={"danger"}>Cerrar</Button>
+          <ButtonGroup vertical>
+                    <Button onClick={handleDatos} variant={"success"}>iniciar Sesion</Button>
+                    <Button onClick={handleClose} variant={"danger"}>Cerrar</Button>
+          </ButtonGroup>
           </Row>
         </Form>
       </div>
       </Modal>
     </div>
   );
+}
+export function RegistrarMarca(){
+  const marcabanner = {
+    maxHeight:"150px",
+    overflow: "hidden"
+}
+  const formulario = {
+      width: "100%",
+      height: "100%"
+  }
+  const loginicon = {
+      maxWidth: "150px",
+      borderRadius: "70px",
+      paddingTop: "5px",
+  }
+  const titulogin = {
+      textAlign: "center",
+      color: "white",
+      fontWeight: "bold"
+  }
+  const [url, setUrl] = useState("https://www.giantfreakinrobot.com/wp-content/uploads/2023/05/hollow-knight-900x492.png")
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
+  const username = useRef()
+  const pssword = useRef()
+  const email = useRef()
+  const confirmacion = useRef()
+  const desc = useRef()
+  const handleDatos = ()=>{
+      let nombre = username.current.value
+      let password = pssword.current.value
+      let mail = email.current.value
+      let conf = confirmacion.current.value
+      let dsc = desc.current.value
+      console.log(nombre)
+      console.log(password)
+      console.log(mail)
+      console.log(conf)
+      console.log(dsc) 
+  }
+  return (
+      <div>
+        <Button className="mt-2" variant="primary" onClick={handleShow}>Registrarse como marca</Button>
+        <Modal size="xl" show={show} onHide={handleClose}>
+        <div style={formulario}>
+          <Container>
+              <Row>
+                  <Col className="offset-1" md={2}>
+                      <img style={loginicon} src={icono} alt="..."/>
+                  </Col>
+                  <Col>
+                      <h2 style={titulogin}>Registrate en KonShoes</h2>
+                      <p style={{color:"white"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Esse voluptatem corrupti optio eos praesentium doloremque 
+                          rerum totam? Magni vel odit fuga autem atque quo saepe 
+                          beatae voluptate corporis unde! Voluptatem!
+                      </p>
+                  </Col>
+                  <Col md={1}></Col>
+              </Row>
+          </Container>
+          <Form style={{padding: "20px"}}>
+              <Row>
+                  <Col>
+                    <Row>
+                      <Col>
+                          <Form.Group className="mb-3" controlId="username">
+                              <Form.Label style={{color:"white"}}>Nombre de usuario</Form.Label>
+                              <Form.Control ref={username} type="text" placeholder="Su nombre" />
+                          </Form.Group>
+                      </Col>
+                      <Col>
+                          <Form.Group className="mb-3">
+                              <Form.Label style={{color:"white"}}>Correo</Form.Label>
+                              <Form.Control ref={email} type="text" placeholder="Su email" />
+                          </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                          <Form.Group className="mb-3" controlId="password">
+                            <Form.Label style={{color:"white"}}>Contraseña</Form.Label>
+                            <Form.Control ref={pssword} type="password" placeholder="Su contraseña" />
+                          </Form.Group>
+                      </Col>
+                      <Col>
+                              <Form.Group className="mb-3">
+                              <Form.Label style={{color:"white"}}>Confirme la contraseña</Form.Label>
+                              <Form.Control ref={confirmacion} type="password" placeholder="confirmar contraseña" />
+                              </Form.Group>
+                          </Col>
+                      </Row>
+                  </Col>
+                  <Col>
+                      <Form.Label style={{color:"white"}}>Describa su marca</Form.Label>
+                      <Form.Control as="textarea" ref={desc} style={{ resize: 'none' }} placeholder='Describa su marca'/>
+                  </Col>
+              </Row>
+
+            <Row style={{padding: "20px"}}>
+              <Col md={6}>
+                  <Row>
+                      <Form.Group className="mb-3">
+                              <Form.Label style={{color:"white"}}>Banner de la marca</Form.Label>
+                              <Form.Control onChange={({target})=>setUrl(target.value)} type="text" placeholder="el URL de su banner" />
+                      </Form.Group>
+                      <ButtonGroup style={{maxWidth: "100%", minWidth: "100%"}}>
+                          <Button onClick={handleDatos} variant={"success"}>Crear</Button>
+                          <Button onClick={handleClose} variant={"danger"}>Cerrar</Button>
+                      </ButtonGroup>
+                  </Row>
+              </Col>
+              <Col>
+                  <Row style={marcabanner}><img style={marcabanner} src={url} alt="..."/></Row>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+        </Modal>
+      </div>
+    );
+}
+export function Registrarse(){
+  const formulario = {
+      width: "100%",
+      height: "100%"
+  }
+  const loginicon = {
+      maxWidth: "150px",
+      borderRadius: "70px",
+      paddingTop: "5px"
+  }
+  const titulogin = {
+      textAlign: "center",
+      color: "white",
+      fontWeight: "bold"
+  }
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
+  const username = useRef()
+  const pssword = useRef()
+  const email = useRef()
+  const confirmacion = useRef()
+  const handleDatos = ()=>{
+      let nombre = username.current.value
+      let password = pssword.current.value
+      let mail = email.current.value
+      let conf = confirmacion.current.value
+      console.log(nombre)
+      console.log(password)
+      console.log(mail)
+      console.log(conf) 
+  }
+  return (
+      <div>
+        <Button className="mt-2" variant="success" onClick={handleShow}>Registrarse</Button>
+        <Modal size="lg" show={show} onHide={handleClose}>
+        <div style={formulario}>
+          <Container>
+              <Row>
+                  <Col md={3}>
+                      <img style={loginicon} src={icono} alt="..."/>
+                  </Col>
+                  <Col>
+                      <h2 style={titulogin}>Registrate en KonShoes</h2>
+                      <p style={{color:"white"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                          Esse voluptatem corrupti optio eos praesentium doloremque 
+                          rerum totam? Magni vel odit fuga autem atque quo saepe 
+                          beatae voluptate corporis unde! Voluptatem!
+                      </p>
+                  </Col>
+              </Row>
+          </Container>
+          <Container style={{padding: "20px"}}>
+          <Row>
+            <Col>
+              <Form.Group className="mb-3" controlId="username">
+                <Form.Label style={{color:"white"}}>Nombre de usuario</Form.Label>
+                <Form.Control ref={username} type="text" placeholder="Su nombre" />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group className="mb-3" controlId="email">
+                  <Form.Label style={{color:"white"}}>Correo</Form.Label>
+                  <Form.Control ref={email} type="text" placeholder="Su email" />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+              <Col>
+                  <Form.Group className="mb-3" controlId="password">
+                    <Form.Label style={{color:"white"}}>Contraseña</Form.Label>
+                    <Form.Control ref={pssword} type="password" placeholder="Su contraseña" />
+                  </Form.Group>
+              </Col>
+              <Col>
+                  <Form.Group className="mb-3">
+                    <Form.Label style={{color:"white"}}>Confirme la contraseña</Form.Label>
+                    <Form.Control ref={confirmacion} type="password" placeholder="confirmar contraseña" />
+                  </Form.Group>
+              </Col>
+          </Row>
+
+            <Row style={{padding: "20px"}}>
+              <ButtonGroup vertical>
+                  <Button onClick={handleDatos} variant={"success"}>Crear</Button>
+                  <Button onClick={handleClose} variant={"danger"}>Cerrar</Button>
+              </ButtonGroup>
+            </Row>
+          </Container>
+        </div>
+        </Modal>
+      </div>
+    );
 }
 

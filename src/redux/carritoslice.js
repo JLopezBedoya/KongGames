@@ -12,8 +12,11 @@ const carritoSlice = createSlice({
         remove:(estado,action)=>{
             const id = action.payload
             estado.save.splice(id,1)
+        },
+        clear:(estado)=>{
+            estado.save = []
         }
     }
 })
-export const { add,remove } = carritoSlice.actions;
+export const { add,remove, clear } = carritoSlice.actions;
 export default carritoSlice.reducer;
