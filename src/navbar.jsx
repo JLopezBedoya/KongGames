@@ -1,54 +1,55 @@
-import { cambiar } from "./redux/mostrarslice"
+import { cambiar } from "./redux/mostrarslice";
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-export function Navbar(){
-    const { id } = useSelector((state)=>state.logeado)
-    if(id==="1"){
-        return(
-            <Admin/>
-        )
-    }
-    else if (id==="2"){
-        return(
-            <Cliente/>
-        )
-    } 
-    else{
-        return(
-            <Unloggin/>
-        )
-    }
-}
-function Admin(){
+import { deslogear } from './redux/usuarioSlice';
+import { clear } from './redux/carritoslice';
+import { BiStoreAlt, BiBlanket, BiLogOut, BiCoinStack,BiCategoryAlt, BiCartAlt,  BiHomeAlt, BiLogIn } from "react-icons/bi";
+import { Registrarse, RegistrarMarca } from "./login";
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+export function UserNavBar(){
     const dispatch = useDispatch()
     return(
-        <div>
-            <button onClick={()=>dispatch(cambiar(0))}>Login</button>
-            <button onClick={()=>dispatch(cambiar(1))}>inicio</button>
-            <button onClick={()=>dispatch(cambiar(2))}>tienda</button>
-            <button onClick={()=>dispatch(cambiar(3))}>Bodega</button>
-            <button onClick={()=>dispatch(cambiar(4))}>Carrito</button>
-        </div>
+      <Nav className="d-flex">
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}><BiLogOut/></Button></Nav.Link>
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}   onClick={()=>dispatch(cambiar(1))}><BiHomeAlt/></Button></Nav.Link>
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(2))}><BiStoreAlt/></Button></Nav.Link>
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(5))}><BiBlanket/></Button></Nav.Link>
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(4))}><BiCartAlt/></Button></Nav.Link>
+      </Nav>
     )
 }
-function Unloggin(){
+export function MarcaNavBar(){
     const dispatch = useDispatch()
     return(
-        <div>
-            <button onClick={()=>dispatch(cambiar(0))}>Login</button>
-            <button onClick={()=>dispatch(cambiar(1))}>inicio</button>
-            <button onClick={()=>dispatch(cambiar(2))}>tienda</button>
-        </div>
+        <Nav className="d-flex">
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}><BiLogOut/></Button></Nav.Link>
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}   onClick={()=>dispatch(cambiar(1))}><BiHomeAlt/></Button></Nav.Link>
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(2))}><BiStoreAlt/></Button></Nav.Link>
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(3))}><BiCoinStack/></Button></Nav.Link>
+        </Nav>
     )
 }
-function Cliente(){
+export function AdminNavBar(){
     const dispatch = useDispatch()
     return(
-        <div>
-            <button onClick={()=>dispatch(cambiar(0))}>Login</button>
-            <button onClick={()=>dispatch(cambiar(1))}>inicio</button>
-            <button onClick={()=>dispatch(cambiar(2))}>tienda</button>
-            <button onClick={()=>dispatch(cambiar(4))}>Carrito</button>
-        </div>
+        <Nav className="d-flex">
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}><BiLogOut/></Button></Nav.Link>
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}   onClick={()=>dispatch(cambiar(1))}><BiHomeAlt/></Button></Nav.Link>
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(2))}><BiStoreAlt/></Button></Nav.Link>
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(3))}><BiCoinStack/></Button></Nav.Link>
+            <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>dispatch(cambiar(6))}><BiCategoryAlt/></Button></Nav.Link>
+        </Nav>
+    )
+}
+export function NoUserNavBar(){
+    const dispatch = useDispatch()
+    return(
+      <Nav className="d-flex">
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}} onClick={()=>{dispatch(cambiar(0))}}><BiLogIn/></Button></Nav.Link>
+        <Registrarse/>
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}   onClick={()=>dispatch(cambiar(1))}><BiHomeAlt/></Button></Nav.Link>
+        <RegistrarMarca/>
+        <Nav.Link><Button variant="." style={{color:"white", fontSize:"20px"}}  onClick={()=>dispatch(cambiar(2))}><BiStoreAlt/></Button></Nav.Link>
+      </Nav>
     )
 }

@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { cambiar } from "./redux/mostrarslice";
 import { logear } from './redux/usuarioSlice';
-
+import { FiUserPlus } from "react-icons/fi";
+import { BsBuildingAdd } from "react-icons/bs";
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -13,7 +14,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
+import { NoUserNavBar } from './navbar';
 import fondo from './assets/btf.jpg';
 import cliente from './assets/link.jpg';
 import admin from './assets/dmc.png';
@@ -121,23 +122,19 @@ function Vendedor(){
                 puedes añadir, modificar y eliminar los Zapatos que hayas
                 Subido como distribuidor, mas opciones pronto...
             </Card.Text>
-          <Formulario tipo={"primary"} usuario={"Vendedor"}/>
+          <Formulario tipo={"primary"} usuario={"Marca"}/>
         </Card.Body>
       </Card>
     )
 }
 function Unloggin(){
-    const dispatch = useDispatch()
     return(
         <Navbar style={barra}>
         <Container>
           <Navbar.Brand></Navbar.Brand>
           <Nav className="justify-content-end">
             <h1 className='titulo'>COMO DESEA INGRESAR?</h1>
-            <Registrarse/>
-            <Nav.Link><Button variant="success" onClick={()=>dispatch(cambiar(1))}>inicio</Button></Nav.Link>
-            <RegistrarMarca/>
-            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(2))}>tienda</Button></Nav.Link>
+            <NoUserNavBar/>
           </Nav>
         </Container>
       </Navbar>
@@ -161,7 +158,7 @@ function Formulario({tipo, usuario}) {
         else{
           alert("Usuario y/o Contraseña incorrecta para admin")
         }
-    }else if(usuario==="Vendedor"){
+    }else if(usuario==="Marca"){
       if(username.current.value==="pizza" && pssword.current.value==="sinpiña"){
         handleClose()
         dispatch(cambiar(1))
@@ -251,7 +248,7 @@ export function RegistrarMarca(){
   }
   return (
       <div>
-        <Button className="mt-2" variant="primary" onClick={handleShow}>Registrarse como marca</Button>
+        <Button className="mt-2" variant="." style={{color:"white", fontSize:"20px"}} onClick={handleShow}><BsBuildingAdd/></Button>
         <Modal size="xl" show={show} onHide={handleClose}>
         <div style={formulario}>
           <Container>
@@ -365,7 +362,7 @@ export function Registrarse(){
   }
   return (
       <div>
-        <Button className="mt-2" variant="success" onClick={handleShow}>Registrarse</Button>
+        <Button className="mt-2" variant="." style={{color:"white", fontSize:"20px"}} onClick={handleShow}><FiUserPlus/></Button>
         <Modal size="lg" show={show} onHide={handleClose}>
         <div style={formulario}>
           <Container>

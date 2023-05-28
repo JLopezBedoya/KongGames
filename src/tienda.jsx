@@ -1,11 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef } from 'react';
 import { filtro, titulo, navStart } from './inicio';
-import { cambiar } from "./redux/mostrarslice";
-import { deslogear } from './redux/usuarioSlice';
-import { add, clear } from './redux/carritoslice';
-
-import { RegistrarMarca, Registrarse } from './login';
+import { add } from './redux/carritoslice';
+import { UserNavBar, AdminNavBar, MarcaNavBar, NoUserNavBar } from './navbar';
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/mgs.jpg';
 import Navbar from 'react-bootstrap/Navbar';
@@ -96,7 +93,6 @@ export function Tienda(){
 
 function StoreNavBar({busqueda}){
     const [filtrados, setFiltrados] = useState({})
-    const dispatch = useDispatch()
     const {id} = useSelector((state)=>state.logeado)
     const buscar=(e)=>{
         busqueda(e.value)
@@ -111,12 +107,7 @@ function StoreNavBar({busqueda}){
                 <Nav.Link style={{width:"300px" }}><Select onChange={buscar} options={options} /></Nav.Link>
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
             </Nav>
-            <Nav className="d-flex">
-                <Nav.Link><Button variant="danger" onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
-                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(5))}>Biblioteca</Button></Nav.Link>
-                <Nav.Link><Button variant="light" onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>
-            </Nav>
+            <UserNavBar/>
             </Container>
         </Navbar>
         )
@@ -130,11 +121,7 @@ function StoreNavBar({busqueda}){
                 <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={options} /></Nav.Link>
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
             </Nav>
-            <Nav className="d-flex">
-                <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
-                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
-            </Nav>
+            <AdminNavBar/>
             </Container>
         </Navbar>
         )
@@ -147,12 +134,7 @@ function StoreNavBar({busqueda}){
             <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={options} /></Nav.Link>
             <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>    
         </Nav>
-        
-        <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}>Cerrar sesion</Button></Nav.Link>
-            <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
-        </Nav>
+        <MarcaNavBar/>
         </Container>
         </Navbar>
         )
@@ -165,12 +147,7 @@ function StoreNavBar({busqueda}){
                 <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={options} /></Nav.Link>
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
             </Nav>
-            <Nav className="d-flex">
-                <RegistrarMarca/>
-                <Nav.Link><Button variant="danger"  onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
-                <Registrarse/>
-                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(0))}>Registrarse</Button></Nav.Link>
-            </Nav>
+            <NoUserNavBar/>
             </Container>
         </Navbar>
         )

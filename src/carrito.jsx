@@ -1,16 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { filtro, titulo, navStart } from './inicio';
-import { cambiar } from "./redux/mostrarslice";
-import { deslogear } from './redux/usuarioSlice';
 import { remove, clear } from './redux/carritoslice';
-
+import { UserNavBar } from './navbar';
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/mgs.jpg';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Nav from 'react-bootstrap/Nav';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 const compra = {
@@ -87,17 +84,11 @@ export function Carrito(){
     )
 }
 function CarritoNav(){
-    const dispatch = useDispatch()
     return(
         <Navbar style={navStart}>
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-        <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}>Cerrar sesion</Button></Nav.Link>
-            <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(5))}>Biblioteca</Button></Nav.Link>
-            <Nav.Link><Button variant="light"   onClick={()=>dispatch(cambiar(1))}>Inicio</Button></Nav.Link>
-        </Nav>
+        <UserNavBar/>
         </Container>
     </Navbar>
     )

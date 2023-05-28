@@ -1,17 +1,14 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { cambiar } from "./redux/mostrarslice";
-import { deslogear } from './redux/usuarioSlice';
+import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
-import { clear } from './redux/carritoslice';
-import { RegistrarMarca, Registrarse } from './login';
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
+import { UserNavBar, AdminNavBar, MarcaNavBar, NoUserNavBar } from './navbar';
+
 
 import reciente from './assets/tloztotk.webp'
 import fondo from './assets/login.png';
@@ -183,19 +180,13 @@ export function Inicio(){
     )
 }
 function NavStart(){
-    const dispatch = useDispatch()
     const {id} = useSelector((state)=>state.logeado)
     if(id==="2"){
         return(
             <Navbar style={navStart}>
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-            <Nav className="d-flex">
-                <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
-                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(5))}>Biblioteca</Button></Nav.Link>
-                <Nav.Link><Button variant="light"   onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>
-            </Nav>
+            <UserNavBar/>
             </Container>
         </Navbar>
         )
@@ -205,12 +196,7 @@ function NavStart(){
             <Navbar style={navStart}>
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-            <Nav className="d-flex">
-                <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
-                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-                <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
-                <Nav.Link><Button variant="info" onClick={()=>dispatch(cambiar(3))}>Usuarios</Button></Nav.Link>
-            </Nav>
+            <AdminNavBar/>
             </Container>
         </Navbar>
         )
@@ -219,11 +205,7 @@ function NavStart(){
         <Navbar style={navStart}>
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-        <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}>Cerrar sesion</Button></Nav.Link>
-            <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(3))}>Bodega</Button></Nav.Link>
-        </Nav>
+        <MarcaNavBar/>
         </Container>
         </Navbar>
         )
@@ -232,12 +214,7 @@ function NavStart(){
             <Navbar style={navStart}>
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-            <Nav className="d-flex">
-                <RegistrarMarca/>
-                <Nav.Link><Button variant="info" onClick={()=>dispatch(cambiar(0))}>Iniciar Sesion</Button></Nav.Link>
-                <Registrarse/>
-                <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>tienda</Button></Nav.Link>
-            </Nav>
+            <NoUserNavBar/>
             </Container>
         </Navbar>
         )

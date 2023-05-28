@@ -1,6 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { cambiar } from "./redux/mostrarslice";
-import { deslogear } from './redux/usuarioSlice';
+import { useSelector} from 'react-redux';
 import React, { useState } from 'react';
 import { filtro, titulo, navStart } from './inicio';
 import Container from 'react-bootstrap/Container';
@@ -9,13 +7,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Nav from 'react-bootstrap/Nav';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import { categorias } from './tienda';
+import {  AdminNavBar, MarcaNavBar } from './navbar';
 const compra = {
     height: "520px",
     width: "300px",
@@ -65,8 +63,8 @@ export function Bodega(){
             <div style={filtro}>
                 <Container>
                     <NavBodega/>
-                    <Row style={{marginTop: "20px",}}>
-                        <Col md={7} style={{overflow: "scroll", scrollbarWidth: "none", height: "530px",}}>
+                    <Row style={{marginTop: "10px",}}>
+                        <Col md={7} style={{overflow: "scroll", scrollbarWidth: "none", height: "510px",}}>
                             <Row>
                                 <Col>
                                     <Productos/>
@@ -92,19 +90,26 @@ export function Bodega(){
     )
 }
 function NavBodega(){
-    const dispatch = useDispatch()
-    return(
+    const {id} = useSelector((state)=>state.logeado)
+    if(id==="1"){
+        return(
+            <Navbar style={navStart}>
+            <Container>
+            <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
+            <AdminNavBar/>
+            </Container>
+        </Navbar>
+        )
+    }else if(id==="3"){
+        return(
         <Navbar style={navStart}>
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-        <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear())}}>Cerrar sesion</Button></Nav.Link>
-            <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(1))}>inicio</Button></Nav.Link>
-        </Nav>
+        <MarcaNavBar/>
         </Container>
         </Navbar>
         )
+    }
 }
 function Productos(){
     return(

@@ -1,21 +1,16 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import { filtro, titulo, navStart } from './inicio';
-import { cambiar } from "./redux/mostrarslice";
-import { deslogear } from './redux/usuarioSlice';
-import { clear } from './redux/carritoslice';
+import { UserNavBar } from './navbar';
 import marca from './assets/login(2).png';
 import zapato from './assets/imagen-2.png'
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/mgs.jpg';
 import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Nav from 'react-bootstrap/Nav';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-
 const cover = {
     minHeight: "150px",
     minWidth: "420px",
@@ -59,17 +54,11 @@ export function Biblioteca(){
     )
 }
 function BiliotecaNav(){
-    const dispatch = useDispatch()
     return(
         <Navbar style={navStart}>
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-        <Nav className="d-flex">
-            <Nav.Link><Button variant="danger"  onClick={()=>{dispatch(cambiar(0));dispatch(deslogear());dispatch(clear())}}>Cerrar sesion</Button></Nav.Link>
-            <Nav.Link><Button variant="warning" onClick={()=>dispatch(cambiar(2))}>Tienda</Button></Nav.Link>
-            <Nav.Link><Button variant="primary" onClick={()=>dispatch(cambiar(4))}>Carrito</Button></Nav.Link>
-            <Nav.Link><Button variant="light"   onClick={()=>dispatch(cambiar(1))}>Inicio</Button></Nav.Link>
-        </Nav>
+        <UserNavBar/>
         </Container>
     </Navbar>
     )
