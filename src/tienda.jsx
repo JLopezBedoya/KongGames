@@ -4,7 +4,7 @@ import { filtro, titulo, navStart } from './inicio';
 import { add } from './redux/carritoslice';
 import { UserNavBar, AdminNavBar, MarcaNavBar, NoUserNavBar } from './navbar';
 import Container from 'react-bootstrap/Container';
-import fondo from './assets/mgs.jpg';
+import fondo from './assets/KsTienda.png';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -15,22 +15,23 @@ import Card from 'react-bootstrap/Card';
 import Select from 'react-select';
 import Nav from 'react-bootstrap/Nav';
 import './CSS/tienda.css';
-
+import shoes from "./assets/imagen-6.png"
+import carrito from "./assets/agg.jpg"
 const tarjetas = {
-    maxWidth: "200px",
-    minWidth: "200px",
-    maxHeight: "300px",
-    minHeight: "300px",
+    maxWidth: "280px",
+    minWidth: "280px",
+    maxHeight: "265px",
+    minHeight: "265px",
     overflow: "hidden",
     marginBottom: "20px",
     backgroundColor: "rgba(33, 37, 41, 0.7)",
     cursor: "pointer"
 }
 const jnombre = {
-    fontSize: "17px",
+    fontSize: "15px",
     color: "white",
-    maxWidth: "200px",
-    minWidth: "200px",
+    maxWidth: "280px",
+    minWidth: "280px",
     margin: "0",
     textAlign: "center"
 }
@@ -42,10 +43,10 @@ const jzona = {
     padding: "0 0 0 40px"
 }
 const cover = {
-    maxWidth: "200px",
-    minWidth: "200px",
-    maxHeight: "255px",
-    minHeight: "255px",
+    maxWidth: "280px",
+    minWidth: "280px",
+    maxHeight: "240px",
+    minHeight: "240px",
 }
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
@@ -68,7 +69,9 @@ export function Tienda(){
         width: "100vw", 
         height: "100vh",
         backgroundImage: "url("+fondo+")",
-        backgroundSize: "100%",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
     }
     return(
         <div className="tienda" style={storeStyle}>
@@ -79,7 +82,9 @@ export function Tienda(){
                         <div style={jzona}>
                             <Row>
                                 {a.map((e,i)=>(
-                                    <Juegos key={i} enmuestra={busqueda} iu={i} />
+                                    <Col>
+                                        <Juegos key={i} enmuestra={busqueda} iu={i} />
+                                    </Col>
                                 ))}
                             </Row>
                         </div>
@@ -155,7 +160,6 @@ function StoreNavBar({busqueda}){
 }
 function Juegos({iu}){
     const [compra, setCompra] = useState(false)
-    const carrito = "https://cdn.mobygames.com/268e90f0-aba2-11ed-bd13-02420a00019c.webp";
     const dispatch = useDispatch()
     const userHover = () =>{
         setCompra(true)
@@ -169,9 +173,9 @@ function Juegos({iu}){
     return(
         <Col md={3}>
             <Card style={tarjetas} onMouseEnter={userHover} onMouseLeave={noUserHover} onClick={agg} className='tarjeta'>
-            <Card.Img style={cover} variant="top" src={compra? carrito:"https://upload.wikimedia.org/wikipedia/en/b/b4/Halo_3_final_boxshot.JPG"} />
+            <Card.Img style={cover} variant="top" src={compra? carrito:shoes} />
             <Card.Body>
-              <Card.Title style={jnombre} >The legend of zelda tears of the Kingdom</Card.Title>
+              <Card.Title style={jnombre}>nombre de los Zapatos</Card.Title>
             </Card.Body>
           </Card>
         </Col>
@@ -189,28 +193,40 @@ function Jfiltros({filtros}){
     const handleShow = () => setShow(true);
     const handlerprecio = ({target}) => setRprecio(target.value)
     const handlerpunt = ({target}) => setRpunt(target.value)
+    console.log(distri)
     const handlerDatos = () =>{
+        console.log(distri.current)
         var filcat;
+        var fildist;
         if((distri!=null)&&(cat!=null)){
         filcat = cat.current.state.selectValue.map((e)=>(e.value))
+        fildist = distri.current.state.selectValue.map((e)=>(e.value))
         filtros({
-            Marcas: distri.current.state.selectValue[0].value,
+            Marcas: fildist,
             categorias: filcat,
             puntuacion: Rpunt,
             precio: Rprecio
         })
         }else if(distri!=null){
+            fildist = distri.current.state.selectValue.map((e)=>(e.value))
             filtros({
-                Marcas: distri.current.state.selectValue[0].value,
+                Marcas: fildist,
                 categorias: [],
                 puntuacion: Rpunt,
                 precio: Rprecio
             })
-        }else{
+        }else if(cat!=null){
             filcat = cat.current.state.selectValue.map((e)=>(e.value))
             filtros({
                 Marcas: "ninguna",
                 categorias: filcat,
+                puntuacion: Rpunt,
+                precio: Rprecio
+            })
+        }else{
+            filtros({
+                Marcas: "ninguna",
+                categorias: [],
                 puntuacion: Rpunt,
                 precio: Rprecio
             })

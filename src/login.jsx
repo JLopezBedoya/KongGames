@@ -15,12 +15,12 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { NoUserNavBar } from './navbar';
-import fondo from './assets/btf.jpg';
-import cliente from './assets/link.jpg';
-import admin from './assets/dmc.png';
-import vendedor from './assets/r4.jpeg';
+import fondo from './assets/ksLogin.png';
+import cliente from './assets/kgLogin.png';
+import admin from './assets/KsAdmin.png';
+import vendedor from './assets/kgMarca.png';
 import icono from './assets/icono.jpg';
-
+import pordef from './assets/KsTienda2.png'
 import './CSS/login.css'
 const tarjetaLogin = { 
     width: '22rem', 
@@ -28,7 +28,7 @@ const tarjetaLogin = {
     minHeight: '27rem',
     marginTop: '20px', 
     color: "white",
-    backgroundColor: "rgba(33, 37, 41, 0.8)",
+    backgroundColor: "rgba(33, 37, 41, 0.5)",
 };
 const tarjetaBody = {
     maxHeight: '6rem', 
@@ -52,7 +52,10 @@ export function Login(){
         display: mostrar[0], 
         width: "100vw", 
         height: "100vh",
-        backgroundImage: "url("+fondo+")"
+        backgroundImage: "url("+fondo+")",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
     }
     const filtro = {
         backgroundColor: "rgba(21,25,30,0.7)", 
@@ -89,8 +92,10 @@ function Cliente(){
         <Card.Body>
           <Card.Title style={centrar} id='cliente' >COMO CLIENTE</Card.Title>
           <Card.Text style={tarjetaBody}>
-            Se tiene acceso al carrito y a la biblioteca donde
+            <Container>
+            Se tiene acceso al carrito, a la opcion de comprar productos y a la biblioteca donde
             se almacenan los zapatos comprados
+            </Container>
             </Card.Text>
             <Formulario tipo={"success"} usuario={"Cliente"}/>
         </Card.Body>
@@ -104,8 +109,10 @@ function Admin(){
         <Card.Body>
           <Card.Title style={centrar} id="admin">COMO ADMINISTRADOR</Card.Title>
           <Card.Text style={tarjetaBody}>
-            se tiene acceso a la bodega donde se pueden añadir, modificar y borrar
-            los zapatos ya existentes, mas opciones pronto...
+            <Container>
+            se tiene acceso al panel de Usuarios y a la bodega donde se pueden añadir, modificar y borrar
+            los zapatos ya existentes
+            </Container>
             </Card.Text>
           <Formulario tipo={"danger"} usuario={"Administrador"}/>
         </Card.Body>
@@ -119,8 +126,10 @@ function Vendedor(){
         <Card.Body>
           <Card.Title style={centrar} id="vendedor">COMO MARCA</Card.Title>
           <Card.Text style={tarjetaBody}>
-                puedes añadir, modificar y eliminar los Zapatos que hayas
-                Subido como distribuidor, mas opciones pronto...
+              <Container>
+              se tiene acceso a la bodega de la marca donde se pueden hacer 
+              peticiones para añadir, modificar y eliminar los Zapatos que hayas añadido
+              </Container>
             </Card.Text>
           <Formulario tipo={"primary"} usuario={"Marca"}/>
         </Card.Body>
@@ -206,9 +215,10 @@ function Formulario({tipo, usuario}) {
     </div>
   );
 }
-export function RegistrarMarca(){
+export function RegistrarMarca({ho, setHo}){
   const marcabanner = {
-    maxHeight:"150px",
+    maxHeight:"185px",
+    minHeight:"185px",
     overflow: "hidden"
 }
   const formulario = {
@@ -225,7 +235,7 @@ export function RegistrarMarca(){
       color: "white",
       fontWeight: "bold"
   }
-  const [url, setUrl] = useState("https://www.giantfreakinrobot.com/wp-content/uploads/2023/05/hollow-knight-900x492.png")
+  const [url, setUrl] = useState(pordef)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [show, setShow] = useState(false);
@@ -234,6 +244,14 @@ export function RegistrarMarca(){
   const email = useRef()
   const confirmacion = useRef()
   const desc = useRef()
+  checkImage(url)
+  .then(validacion => {
+    if (validacion) {
+      setUrl(url)
+    } else {
+      setUrl(pordef)
+    }
+  })
   const handleDatos = ()=>{
       let nombre = username.current.value
       let password = pssword.current.value
@@ -248,7 +266,7 @@ export function RegistrarMarca(){
   }
   return (
       <div>
-        <Button className="mt-2" variant="." style={{color:"white", fontSize:"20px"}} onClick={handleShow}><BsBuildingAdd/></Button>
+        <Button className="mt-2" variant="." onMouseEnter={()=>setHo([false,false,false,true,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[3]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><BsBuildingAdd/></Button>
         <Modal size="xl" show={show} onHide={handleClose}>
         <div style={formulario}>
           <Container>
@@ -257,11 +275,11 @@ export function RegistrarMarca(){
                       <img style={loginicon} src={icono} alt="..."/>
                   </Col>
                   <Col>
-                      <h2 style={titulogin}>Registrate en KonShoes</h2>
-                      <p style={{color:"white"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                          Esse voluptatem corrupti optio eos praesentium doloremque 
-                          rerum totam? Magni vel odit fuga autem atque quo saepe 
-                          beatae voluptate corporis unde! Voluptatem!
+                      <h2 style={titulogin}>Registrate como marca en KonShoes</h2>
+                      <p style={{color:"white"}}>Al registrarte como una marca en KongShoes
+                      puedes formar parte de las distribuidoras que proveen los mejores zapatos
+                      con la mejor calidad a nuestra tienda, al unirte tendras acceso a tu propia bodega donde 
+                      podras administrar tus productos, tambien le brindaras datos sobre tu marca al administrador(nombre, correo, ventas y productos) 
                       </p>
                   </Col>
                   <Col md={1}></Col>
@@ -273,13 +291,13 @@ export function RegistrarMarca(){
                     <Row>
                       <Col>
                           <Form.Group className="mb-3" controlId="username">
-                              <Form.Label style={{color:"white"}}>Nombre de usuario</Form.Label>
-                              <Form.Control ref={username} type="text" placeholder="Su nombre" />
+                              <Form.Label style={{color:"white"}}>Nombre de la marca</Form.Label>
+                              <Form.Control ref={username} type="text" placeholder="Su marca" />
                           </Form.Group>
                       </Col>
                       <Col>
                           <Form.Group className="mb-3">
-                              <Form.Label style={{color:"white"}}>Correo</Form.Label>
+                              <Form.Label style={{color:"white"}}>Correo de la distribuidora</Form.Label>
                               <Form.Control ref={email} type="text" placeholder="Su email" />
                           </Form.Group>
                       </Col>
@@ -328,7 +346,7 @@ export function RegistrarMarca(){
       </div>
     );
 }
-export function Registrarse(){
+export function Registrarse({ho, setHo}){
   const formulario = {
       width: "100%",
       height: "100%"
@@ -362,7 +380,7 @@ export function Registrarse(){
   }
   return (
       <div>
-        <Button className="mt-2" variant="." style={{color:"white", fontSize:"20px"}} onClick={handleShow}><FiUserPlus/></Button>
+        <Button className="mt-2" variant="." onMouseEnter={()=>setHo([false,true,false,false,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[1]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><FiUserPlus/></Button>
         <Modal size="lg" show={show} onHide={handleClose}>
         <div style={formulario}>
           <Container>
@@ -371,11 +389,12 @@ export function Registrarse(){
                       <img style={loginicon} src={icono} alt="..."/>
                   </Col>
                   <Col>
-                      <h2 style={titulogin}>Registrate en KonShoes</h2>
-                      <p style={{color:"white"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                          Esse voluptatem corrupti optio eos praesentium doloremque 
-                          rerum totam? Magni vel odit fuga autem atque quo saepe 
-                          beatae voluptate corporis unde! Voluptatem!
+                      <h2 style={titulogin}>Registrate como cliente en KonShoes</h2>
+                      <p style={{color:"white"}}>Al registrarte como un cliente, formaras parte
+                      de la creciente comudidad de KongShoes, Con los mejores precios y
+                      calidad en calzado para todos los publicos, al registrarte como cliente, tendras
+                      acceso a tu biblioteca donde se almacenaran los productos que compres,
+                      tambien le brindaras datos sobre tu usuario al administrador(nombre, correo, y compras)
                       </p>
                   </Col>
               </Row>
@@ -421,5 +440,20 @@ export function Registrarse(){
         </Modal>
       </div>
     );
+}
+function checkImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    
+    img.onload = () => {
+      resolve(true);
+    };
+
+    img.onerror = () => {
+      resolve(false);
+    };
+
+    img.src = url;
+  });
 }
 

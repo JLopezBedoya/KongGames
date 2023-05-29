@@ -10,8 +10,12 @@ import Modal from 'react-bootstrap/Modal';
 import { UserNavBar, AdminNavBar, MarcaNavBar, NoUserNavBar } from './navbar';
 
 
-import reciente from './assets/tloztotk.webp'
-import fondo from './assets/login.png';
+import reciente from './assets/kgunder.png';
+import ult from './assets/kgunder3.png';
+import punt from './assets/kgunder4.png';
+import nuevos from './assets/kgunder2.png';
+import fondo from './assets/ksInicio.png';
+import banner from './assets/kgMarca.png';
 import './CSS/inicio.css';
 
 export const navStart = {
@@ -38,12 +42,12 @@ const distList = {
     scrollbarWidth: "none",
 }
 const contBanner = {
-    width: "550px",
-    height: "200px",
+    width: "535px",
+    height: "210px",
     overflow: "hidden",
     borderRadius: "30px",
     padding: "0",
-    backgroundImage: "url(https://www.giantfreakinrobot.com/wp-content/uploads/2023/05/hollow-knight-900x492.png)",
+    backgroundImage: "url("+banner+")",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat"
@@ -51,8 +55,8 @@ const contBanner = {
 const bannerName = {
     backgroundColor: "rgba(21,25,30,0.7)",
     color: "white",
-    width: "550px", 
-    height: "200px",
+    width: "535px", 
+    height: "210px",
     fontSize: "20px",
     textAlign: "center",
     paddingTop: "165px",
@@ -63,8 +67,8 @@ const bannerOff = {
     opacity: "0",
     backgroundColor: "rgba(21,25,30,0.7)",
     color: "white",
-    width: "550px", 
-    height: "200px",
+    width: "535px", 
+    height: "210px",
     fontSize: "20px",
     textAlign: "center",
     paddingTop: "10px",
@@ -79,35 +83,24 @@ const underText = {
 }
 const underFiltro = {
     backgroundColor: "rgba(21,25,30,0.7)",
-    width: "180px",
+    width: "250px",
     height: "250px",
     transition: "opacity 0.3s, padding 0.35s ease",
     
 }
 const underFiltroff = {
     backgroundColor: "rgba(21,25,30,0.7)",
-    width: "180px",
+    width: "250px",
     height: "250px",
     paddingTop: "80px",
     opacity: "0",
     transition: "opacity 0.3s, padding 0.35s ease",
     cursor: "pointer",
 }
-const valorado = {
-    width: "350px",
-    height: "480px",
-    borderRadius: "30px",
-    backgroundImage: "url(https://cdn.mobygames.com/f7ec8bee-ac0a-11ed-96e1-02420a00012d.webp)",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    cursor: "pointer",
-    overflow: "hidden"
-}
 const valoradoFiltro = {
     backgroundColor: "rgba(21,25,30,0.7)",
-    width: "350px",
-    height: "480px",
+    width: "240px",
+    height: "210px",
     opacity: "1",
     transition: "opacity 0.3s, padding 0.35s ease",
     cursor: "pointer",
@@ -116,8 +109,8 @@ const valoradoFiltro = {
 }
 const valoradoFiltroff = {
     backgroundColor: "rgba(21,25,30,0.7)",
-    width: "350px",
-    height: "480px",
+    width: "240px",
+    height: "210px",
     opacity: "0",
     transition: "opacity 0.3s, padding 0.35s ease",
     cursor: "pointer",
@@ -132,7 +125,9 @@ export function Inicio(){
         width: "100vw", 
         height: "100vh",
         backgroundImage: "url("+fondo+")",
-        backgroundSize: "100%"
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
     }  
     return(
         <div className="inicio" style={startStyle}>
@@ -140,43 +135,59 @@ export function Inicio(){
             <Container>
                 <NavStart/>
                 <Row style={{marginTop: "30px",}}>
-                    <Col>
+                    <Col md={3}>
                     <ListGroup variant="flush" style={distList}>
-                        <ListGroup.Item>Bethesda</ListGroup.Item>
-                        <ListGroup.Item>Rockstar</ListGroup.Item>
-                        <ListGroup.Item>Ubisof</ListGroup.Item>
-                        <ListGroup.Item>Devolver</ListGroup.Item>
-                        <ListGroup.Item>Bethesda</ListGroup.Item>
-                        <ListGroup.Item>Rockstar</ListGroup.Item>
-                        <ListGroup.Item>Ubisof</ListGroup.Item>
-                        <ListGroup.Item>Devolver</ListGroup.Item>
-                        <ListGroup.Item>Bethesda</ListGroup.Item>
-                        <ListGroup.Item>Rockstar</ListGroup.Item>
-                        <ListGroup.Item>Ubisof</ListGroup.Item>
-                        <ListGroup.Item>Devolver</ListGroup.Item>
-                        <ListGroup.Item>Bethesda</ListGroup.Item>
-                        <ListGroup.Item>Rockstar</ListGroup.Item>
-                        <ListGroup.Item>Ubisof</ListGroup.Item>
-                        <ListGroup.Item>Devolver</ListGroup.Item>
+                        <MarcasLista nombre={"bethesda"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"bethesda"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"bethesda"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca"} desc={"adsawd awdawda wd awd"}/>
                     </ListGroup>
                     </Col>
-                    <Col>
+                    <Col md={9}>
                         <Row>
-                            <BannerStart/>
-                            <Row id="under">
-                                <Col md={4}><Under tipo={"Mas vendidos"} url={"https://cdn.mobygames.com/22778766-ab8d-11ed-be6f-02420a000197.webp"}/></Col>
-                                <Col md={4}><Under tipo={"Ultimos añadidos"} url={reciente}/></Col>
-                                <Col md={4}><Under tipo={"Ultimas Unidades"} url={"https://upload.wikimedia.org/wikipedia/en/b/b4/Halo_3_final_boxshot.JPG"}/></Col>
-                            </Row>
+                            <Col>
+                                <BannerStart/>
+                            </Col>
+                            <Col>
+                                <Mejor tipo={"Ultimas Unidades"} url={ult}/>
+                            </Col>
                         </Row>
-                    </Col>
-                    <Col>
-                        <Mejor/>
+                        <Row id="under">
+                            <Col><Under tipo={"Mas vendidos"} url={nuevos}/></Col>
+                            <Col><Under tipo={"Ultimos añadidos"} url={reciente}/></Col>
+                            <Col><Under tipo={"Mejores Puntuados"} url={punt}/></Col> 
+                        </Row>
                     </Col>
                 </Row>
             </Container>
             </div>
         </div>
+    )
+}
+function MarcasLista({nombre, desc}){
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handlerShow = () =>{
+        setShow(true)
+    }
+    return(
+        <>
+            <ListGroup.Item action onClick={handlerShow} >{nombre}</ListGroup.Item>
+            <Modal size="lg" show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                    <h1 style={{color:"white"}}>{nombre}</h1>
+                    </Modal.Header>
+                    <p style={{color:"white"}}>{desc}</p>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+            </Modal>
+        </>
     )
 }
 function NavStart(){
@@ -256,7 +267,7 @@ function BannerStart(){
 function Under({tipo, url}){
     const cover = {
         marginTop: "25px",
-        width: "180px",
+        width: "250px",
         height: "250px",
         padding: "0",
         borderRadius: "30px",
@@ -299,7 +310,7 @@ function Under({tipo, url}){
         </div>
     )
 }
-function Mejor(){
+function Mejor({tipo, url}){
     const [hover, setHover] = useState(false)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -312,14 +323,26 @@ function Mejor(){
     const noUserHover=()=>{
         setHover(false)
     }
+    const valorado = {
+        width: "240px",
+        height: "210px",
+        borderRadius: "30px",
+        marginBottom: "10px",
+        backgroundImage: "url("+url+")",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        cursor: "pointer",
+        overflow: "hidden"
+    }
     return(
         <div style={valorado}>
             <div onClick={handlerShow} onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? valoradoFiltro:valoradoFiltroff}>
-                <p>Mejores Valorados</p>
+                <p>{tipo}</p>
             </div>
             <Modal size="lg" show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                    <h1 style={{color:"white"}}>Mejores Puntuados</h1>
+                    <h1 style={{color:"white"}}>{tipo}</h1>
                     </Modal.Header>
                 <Button variant="secondary" onClick={handleClose}>
                     Close

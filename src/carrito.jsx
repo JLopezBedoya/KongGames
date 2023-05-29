@@ -3,12 +3,13 @@ import { filtro, titulo, navStart } from './inicio';
 import { remove, clear } from './redux/carritoslice';
 import { UserNavBar } from './navbar';
 import Container from 'react-bootstrap/Container';
-import fondo from './assets/mgs.jpg';
+import fondo from './assets/ksCarrito.png';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import template from "./assets/imagen-3.png"
 
 const compra = {
     height: "200px",
@@ -38,6 +39,7 @@ const vacio = {
     paddingTop: "70px"
 }
 const foto = {
+    paddingLeft: "10px",
     minHeight: "200px",
     minWidth: "250px",
     maxHeight: "200px",
@@ -107,13 +109,13 @@ function Compras({datos, iu}){
             <Row>
                 <Col style={{padding:"0", marginRight: "10px"}} md={4}>
                     <div style={cover}>
-                        <img src='https://cdn.mobygames.com/4d4a9422-abd5-11ed-ba50-02420a000199.webp' style={foto} alt='...'/>
+                        <img src={template} style={foto} alt='...'/>
                     </div>
                 </Col>
                 <Col>
                     <Row style={{marginTop:"20px"}}>
                         <Col md={8}>
-                            <p> {datos} </p>
+                            <p>Zapatos #{datos} </p>
                         </Col>
                         <Col>
                             <p>$190.000</p>
@@ -121,7 +123,7 @@ function Compras({datos, iu}){
                     </Row>
                     <Row style={{marginTop:"20px"}}>
                         <Col md={8}>
-                            <p>Marca con un nombre creado por ia</p>
+                            <p>Marca Del Zapatos</p>
                         </Col>
                         <Col>
                             <p>9/10</p>

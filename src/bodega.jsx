@@ -2,7 +2,7 @@ import { useSelector} from 'react-redux';
 import React, { useState } from 'react';
 import { filtro, titulo, navStart } from './inicio';
 import Container from 'react-bootstrap/Container';
-import fondo from './assets/mgs.jpg';
+import fondo from './assets/KsBodega.png';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -14,6 +14,7 @@ import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import { categorias } from './tienda';
 import {  AdminNavBar, MarcaNavBar } from './navbar';
+import prod from './assets/imagen-2.png'
 const compra = {
     height: "520px",
     width: "300px",
@@ -117,7 +118,7 @@ function Productos(){
         <Row>
             <Col md={4}>
                 <div style={cover}>
-                    <img src='https://cdn.mobygames.com/4d4a9422-abd5-11ed-ba50-02420a000199.webp' style={foto} alt='...'/>
+                    <img src={prod} style={foto} alt='...'/>
                 </div>
             </Col>
         </Row>

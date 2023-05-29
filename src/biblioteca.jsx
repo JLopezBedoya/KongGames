@@ -4,7 +4,7 @@ import { UserNavBar } from './navbar';
 import marca from './assets/login(2).png';
 import zapato from './assets/imagen-2.png'
 import Container from 'react-bootstrap/Container';
-import fondo from './assets/mgs.jpg';
+import fondo from './assets/ksBiblioteca.png';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

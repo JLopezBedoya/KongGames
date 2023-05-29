@@ -1,6 +1,6 @@
 import { useSelector} from 'react-redux';
 import { filtro, titulo, navStart } from './inicio';
-import { UserNavBar } from './navbar';
+import { AdminNavBar } from './navbar';
 import marca from './assets/login(2).png';
 import icon from './assets/icono.jpg';
 import Container from 'react-bootstrap/Container';
@@ -61,7 +61,7 @@ function UsuariosNav(){
         <Navbar style={navStart}>
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
-        <UserNavBar/>
+        <AdminNavBar/>
         </Container>
     </Navbar>
     )
