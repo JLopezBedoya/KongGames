@@ -137,14 +137,6 @@ function Pantalla({exp, va}){
                                 <p>$190000</p>
                             </Col>
                         </Row>
-                        <Row className="my-3">
-                            <Col>
-                                <p>Fecha de Creacion: </p>
-                            </Col>
-                            <Col>
-                                <p>10/11/2021</p>
-                            </Col>
-                        </Row>
                     </Col>
                     <Col style={{color: "white"}}>
                         <Row className="my-3">
@@ -153,14 +145,6 @@ function Pantalla({exp, va}){
                             </Col>
                             <Col>
                                 <p>zapatos {exp}</p>
-                            </Col>
-                        </Row>
-                        <Row className="my-3">
-                            <Col>
-                                <p>marca: </p>
-                            </Col>
-                            <Col>
-                                <p>marca de zapatos</p>
                             </Col>
                         </Row>
                         <Row className="my-3">
@@ -225,10 +209,10 @@ function Pantalla({exp, va}){
                         </Row>
                         <Row className="my-3">
                             <Col md={4}>
-                                <p>Fecha de creracion</p>
+                                <p>Mas vendido</p>
                             </Col>
                             <Col>
-                                <p>12/20/2009</p>
+                                <p>zapato x</p>
                             </Col>
                         </Row>
                     </Col>

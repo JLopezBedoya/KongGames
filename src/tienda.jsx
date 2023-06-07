@@ -49,9 +49,9 @@ const cover = {
     minHeight: "240px",
 }
 const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
+    { value: 'chocolate', label: 'Zapatos 1' },
+    { value: 'strawberry', label: 'Zapatos 2' },
+    { value: 'vanilla', label: 'Zapatos 3' }
   ]
 export const categorias = [
     {value: "deportivos", label: "deportivos"},
@@ -83,7 +83,7 @@ export function Tienda(){
                             <Row>
                                 {a.map((e,i)=>(
                                     <Col>
-                                        <Juegos key={i} enmuestra={busqueda} iu={i} />
+                                        <Juegos key={i+"juegos"} enmuestra={busqueda} iu={i}/>
                                     </Col>
                                 ))}
                             </Row>
@@ -107,7 +107,7 @@ function StoreNavBar({busqueda}){
         return(
             <Navbar style={navStart}>
             <Container>
-            <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+            <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
                 <Nav.Link style={{width:"300px" }}><Select onChange={buscar} options={options} /></Nav.Link>
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
@@ -121,7 +121,7 @@ function StoreNavBar({busqueda}){
         return(
             <Navbar style={navStart}>
             <Container>
-            <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+            <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
                 <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={options} /></Nav.Link>
                 <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>
@@ -134,7 +134,7 @@ function StoreNavBar({busqueda}){
         return(
         <Navbar style={navStart}>
         <Container>
-        <Navbar.Brand style={titulo}>KongGames</Navbar.Brand>
+        <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
         <Nav>
             <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={options} /></Nav.Link>
             <Nav.Link><Jfiltros filtros={setFiltrados}/></Nav.Link>    
@@ -184,7 +184,6 @@ function Juegos({iu}){
 function Jfiltros({filtros}){
     const [show, setShow] = useState(false);
     const [Rprecio, setRprecio] = useState(0);
-    const [Rpunt, setRpunt] = useState(0);
 
     const distri = useRef(null);
     const cat = useRef(null);
@@ -192,7 +191,6 @@ function Jfiltros({filtros}){
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handlerprecio = ({target}) => setRprecio(target.value)
-    const handlerpunt = ({target}) => setRpunt(target.value)
     console.log(distri)
     const handlerDatos = () =>{
         console.log(distri.current)
@@ -204,7 +202,6 @@ function Jfiltros({filtros}){
         filtros({
             Marcas: fildist,
             categorias: filcat,
-            puntuacion: Rpunt,
             precio: Rprecio
         })
         }else if(distri!=null){
@@ -212,7 +209,6 @@ function Jfiltros({filtros}){
             filtros({
                 Marcas: fildist,
                 categorias: [],
-                puntuacion: Rpunt,
                 precio: Rprecio
             })
         }else if(cat!=null){
@@ -220,30 +216,28 @@ function Jfiltros({filtros}){
             filtros({
                 Marcas: "ninguna",
                 categorias: filcat,
-                puntuacion: Rpunt,
                 precio: Rprecio
             })
         }else{
             filtros({
                 Marcas: "ninguna",
                 categorias: [],
-                puntuacion: Rpunt,
                 precio: Rprecio
             })
         }
     }
 
     const distribuidores = [
-            {value: "Bethesda", label: "Bethesda"},
-            {value: "Devolver", label: "Devolver"},
-            {value: "FromSoftware", label: "FromSoftware"},
-            {value: "RockStar", label: "RockStar"}]
+            {value: "Bethesda", label: "marca 1"},
+            {value: "Devolver", label: "marca 2"},
+            {value: "FromSoftware", label: "marca 3"},
+            {value: "RockStar", label: "marca 4"}]
     return(
         <div>
         <Button variant="info" onClick={handleShow}>Ver filtros</Button>
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title className="otro">Filtrar Busqueda de videojuegos</Offcanvas.Title>
+          <Offcanvas.Title className="otro">Filtrar Busqueda de zapatos</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
         <Form>
@@ -252,8 +246,6 @@ function Jfiltros({filtros}){
                 <Select className='mb-4' ref={cat} placeholder="categorias" isMulti options={categorias}/>
                 <Form.Label className="otro">Rango de precio: {Rprecio} </Form.Label>
                 <Form.Range defaultValue={Rprecio} min={10} max={150} onChange={handlerprecio}/>
-                <Form.Label className='otro my-4'>Rango de puntuacion: {Rpunt}</Form.Label>
-                <Form.Range defaultValue={Rpunt} min={1} max={5} onChange={handlerpunt}/>
             </Form.Group>
       <Button variant="light" className='my-4' onClick={handlerDatos}>Aplicar Filtros</Button>
     </Form>

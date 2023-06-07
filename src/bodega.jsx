@@ -14,9 +14,10 @@ import Form from 'react-bootstrap/Form';
 import Select from 'react-select';
 import { categorias } from './tienda';
 import {  AdminNavBar, MarcaNavBar } from './navbar';
-import prod from './assets/imagen-2.png'
+import prod from './assets/imagen-2.png';
+import im from './assets/ksLogin.png'
 const compra = {
-    height: "520px",
+    height: "480px",
     width: "300px",
     backgroundColor: "rgba(33, 37, 41, 0.8)",
     color: "white",
@@ -129,7 +130,7 @@ function Productos(){
                         <p> Nombre:</p>
                     </Col>
                     <Col>
-                        <p>zapato generico</p>
+                        <p>zapato y</p>
                     </Col>
                 </Row>
                 <Row>
@@ -137,7 +138,7 @@ function Productos(){
                         <p>Marca:</p>
                     </Col>
                     <Col>
-                        <p>Marca creado por ia</p>
+                        <p>Marca de zapatos y</p>
                     </Col>
                 </Row>
                 <Row>
@@ -146,14 +147,6 @@ function Productos(){
                     </Col>
                     <Col>
                         <p>198.000</p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={3}>
-                        <p>Puntuacio:</p>
-                    </Col>
-                    <Col>
-                        <p>9/10</p>
                     </Col>
                 </Row>
                 <Row>
@@ -192,9 +185,9 @@ function Actualizar(){
         </ButtonGroup>
 
       <Modal show={show} onHide={handleClose}>
-        <h3 style={{color:"white", textAlign: "center"}}>Actualizar Zapatos Genericos</h3>
+        <h3 style={{color:"white", textAlign: "center"}}>Actualizar Zapatos y</h3>
         <Container className="mt-2">
-        <Row style={marcabanner}><img style={marcabanner} src="https://www.giantfreakinrobot.com/wp-content/uploads/2023/05/hollow-knight-900x492.png" alt="..."/></Row>
+        <Row style={marcabanner}><img style={marcabanner} src={im} alt="..."/></Row>
         <FloatingLabel label="Nombre de los zapatos" className="my-3">
             <Form.Control type="text" placeholder="Zapatos" />
         </FloatingLabel>
@@ -246,18 +239,10 @@ function Admininfo({id}){
                         </Row>
                         <Row>
                             <Col md={6}>
-                                <p>Ventas de esta semana:</p>
-                            </Col>
-                            <Col>
-                                <p>50</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
                                 <p>Marca con mas ventas:</p>
                             </Col>
                             <Col>
-                                <p>Marca Random</p>
+                                <p>Marca de zapatos</p>
                             </Col>
                         </Row>
                         <Row>
@@ -265,7 +250,7 @@ function Admininfo({id}){
                                 <p>Producto mas vendido:</p>
                             </Col>
                             <Col>
-                                <p>Zapato random</p>
+                                <p>Zapato x</p>
                             </Col>
                         </Row>
                         <Row>
@@ -323,14 +308,6 @@ function Admininfo({id}){
                         </Row>
                         <Row>
                             <Col md={6}>
-                                <p>Ventas de esta semana:</p>
-                            </Col>
-                            <Col>
-                                <p>50</p>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6}>
                                 <p>Producto mas vendido:</p>
                             </Col>
                             <Col>
@@ -369,7 +346,7 @@ function Agg(){
       <Modal show={show} onHide={handleClose}>
         <h1 style={{color:"white", textAlign: "center"}}>Añadir zapatos</h1>
         <Container className="mt-2">
-        <Row style={marcabanner}><img style={marcabanner} src="https://www.giantfreakinrobot.com/wp-content/uploads/2023/05/hollow-knight-900x492.png" alt="..."/></Row>
+        <Row style={marcabanner}><img style={marcabanner} src={im} alt="..."/></Row>
         <FloatingLabel label="Nombre de los zapatos" className="my-3">
             <Form.Control type="text" placeholder="Zapatos" />
         </FloatingLabel>
@@ -407,7 +384,7 @@ function Peticion(){
       <Modal show={show} onHide={handleClose}>
         <h1 style={{color:"white", textAlign: "center"}}>Añadir zapatos</h1>
         <Container className="mt-2">
-        <Row style={marcabanner}><img style={marcabanner} src="https://www.giantfreakinrobot.com/wp-content/uploads/2023/05/hollow-knight-900x492.png" alt="..."/></Row>
+        <Row style={marcabanner}><img style={marcabanner} src={im} alt="..."/></Row>
         <FloatingLabel label="Nombre de los zapatos" className="my-3">
             <Form.Control type="text" placeholder="Zapatos" />
         </FloatingLabel>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import {Login} from './login';
+import { Login } from './login';
 import {Inicio } from './inicio';
 import { Tienda } from './tienda';
 import { Carrito } from './carrito';

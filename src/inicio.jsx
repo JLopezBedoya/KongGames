@@ -137,12 +137,24 @@ export function Inicio(){
                 <Row style={{marginTop: "30px",}}>
                     <Col md={3}>
                     <ListGroup variant="flush" style={distList}>
-                        <MarcasLista nombre={"bethesda"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"bethesda"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"bethesda"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca1"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca2"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca3"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca4"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca5"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca6"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca7"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca8"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca9"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca10"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca11"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca12"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca13"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca14"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca15"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca16"} desc={"adsawd awdawda wd awd"}/>
+                        <MarcasLista nombre={"marca17"} desc={"texto descriptivos"}/>
+                        <MarcasLista nombre={"marca18"} desc={"adsawd awdawda wd awd"}/>
                     </ListGroup>
                     </Col>
                     <Col md={9}>
@@ -157,7 +169,7 @@ export function Inicio(){
                         <Row id="under">
                             <Col><Under tipo={"Mas vendidos"} url={nuevos}/></Col>
                             <Col><Under tipo={"Ultimos añadidos"} url={reciente}/></Col>
-                            <Col><Under tipo={"Mejores Puntuados"} url={punt}/></Col> 
+                            <Col><Under tipo={"v.i.p"} url={punt}/></Col> 
                         </Row>
                     </Col>
                 </Row>

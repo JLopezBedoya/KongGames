@@ -10,7 +10,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useState } from 'react';
-import Form from 'react-bootstrap/Form';
 const cover = {
     minHeight: "150px",
     minWidth: "420px",
@@ -95,10 +94,6 @@ function Lista({settear}){
     )
 }
 function Pantalla({exp}){
-    const [punt, setPunt] = useState(3)
-    const puntuar = ({target})=>{
-        setPunt(target.value)
-    }
     return(
         <div style={{backgroundColor: "rgba(21,25,30,0.7)", borderRadius:"30px",height:"500px"}}>
             <Container>
@@ -141,10 +136,6 @@ function Pantalla({exp}){
                         <Col>
                             <p>$190000</p>
                         </Col>
-                    </Row>
-                    <Row className="my-3">
-                    <Form.Label>Tu Puntuacion: {punt}/5</Form.Label>
-                        <Form.Range min={1} max={5} onChange={puntuar}/>
                     </Row>
                 </Col>
             </Row>

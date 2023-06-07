@@ -22,6 +22,7 @@ import vendedor from './assets/kgMarca.png';
 import icono from './assets/icono.jpg';
 import pordef from './assets/KsTienda2.png'
 import './CSS/login.css'
+import { useGet } from './hooks/useGet'
 const tarjetaLogin = { 
     width: '22rem', 
     maxHeight: '27rem', 
@@ -47,6 +48,12 @@ const barra = {
     backgroundColor: "rgba(33, 37, 41, 0.8)"
 }
 export function Login(){
+    const {info, loading} = useGet("/shoes/ver")
+    if(loading){
+      console.log("cargando...")
+    }else{
+      console.log(info)
+    }
     const { mostrar } = useSelector((state)=>state.mostrando)
     const loginStyle = {
         display: mostrar[0], 
@@ -159,7 +166,7 @@ function Formulario({tipo, usuario}) {
   const handleShow = () => setShow(true);
   const handleDatos = () =>{
     if(usuario==="Administrador"){
-        if(username.current.value==="pizza" && pssword.current.value==="sinpiña"){
+        if(username.current.value==="abc" && pssword.current.value==="abc"){
           handleClose()
           dispatch(cambiar(1))
           dispatch(logear({nombre:"Admin", id:"1"}))
@@ -168,7 +175,7 @@ function Formulario({tipo, usuario}) {
           alert("Usuario y/o Contraseña incorrecta para admin")
         }
     }else if(usuario==="Marca"){
-      if(username.current.value==="pizza" && pssword.current.value==="sinpiña"){
+      if(username.current.value==="abc" && pssword.current.value==="abc"){
         handleClose()
         dispatch(cambiar(1))
         dispatch(logear({nombre:"343", id:"3"}))
@@ -177,10 +184,10 @@ function Formulario({tipo, usuario}) {
         alert("Usuario y/o Contraseña incorrecta para distribuidor")
       }
   }else if(usuario==="Cliente"){
-    if(username.current.value==="pizza" && pssword.current.value==="sinpiña"){
+    if(username.current.value==="abc" && pssword.current.value==="abc"){
       handleClose()
       dispatch(cambiar(1))
-      dispatch(logear({nombre:"Random", id:"2"}))
+      dispatch(logear({nombre:"Usuario", id:"2"}))
     }
     else{
       alert("Usuario y/o Contraseña incorrecta para cliente")
