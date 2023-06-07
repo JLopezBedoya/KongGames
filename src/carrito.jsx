@@ -18,7 +18,8 @@ const compra = {
     backgroundColor: "rgba(33, 37, 41, 0.8)",
     color: "white",
     borderRadius: "30px",
-    overflow: "hidden"
+    overflow: "hidden",
+    transition: "1s ease all"
 }
 const cover = {
     margin:"0",
@@ -54,10 +55,8 @@ const panel = {
     paddingTop: "10px"
 }
 export function Carrito(){
-    const {mostrar} = useSelector((state)=>state.mostrando)
     const { save } = useSelector((state)=>state.carrito)
     const carritoStyle = {
-            display: mostrar[4],
             width: "100vw", 
             height: "100vh",
             backgroundImage: "url("+fondo+")",

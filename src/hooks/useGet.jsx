@@ -12,3 +12,9 @@ export function useGet(url){
     }, [url])
     return { info, loading }
 }
+/* const {info, loading} = useGet("/shoes/ver")
+if(loading){
+  console.log("cargando...")
+}else{
+  console.log(info)
+} */

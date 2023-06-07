@@ -1,4 +1,3 @@
-import { useSelector} from 'react-redux';
 import { filtro, titulo, navStart } from './inicio';
 import { UserNavBar } from './navbar';
 import marca from './assets/login(2).png';
@@ -25,10 +24,8 @@ const shoes = {
     maxWidth: "400px",
 }
 export function Biblioteca(){
-    const {mostrar} = useSelector((state)=>state.mostrando)
     const [expo, setExpo] = useState(1)
     const bibliotecaStyle = {
-            display: mostrar[5],
             width: "100vw", 
             height: "100vh",
             backgroundImage: "url("+fondo+")",

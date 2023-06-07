@@ -119,9 +119,7 @@ const valoradoFiltroff = {
     paddingLeft: "200px"
 }
 export function Inicio(){
-    const {mostrar} = useSelector((state)=>state.mostrando)
     const startStyle = {
-        display: mostrar[1],
         width: "100vw", 
         height: "100vh",
         backgroundImage: "url("+fondo+")",

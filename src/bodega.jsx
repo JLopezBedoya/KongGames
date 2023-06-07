@@ -51,10 +51,8 @@ const marcabanner = {
     overflow: "hidden"
 }
 export function Bodega(){
-    const {mostrar} = useSelector((state)=>state.mostrando)
     const {id} = useSelector((state)=>state.logeado)
     const bodegaStyle = {
-        display: mostrar[3],
         width: "100vw", 
         height: "100vh",
         backgroundImage: "url("+fondo+")",

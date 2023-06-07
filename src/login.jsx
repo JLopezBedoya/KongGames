@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { cambiar } from "./redux/mostrarslice";
+import { useDispatch } from 'react-redux';
 import { logear } from './redux/usuarioSlice';
 import { FiUserPlus } from "react-icons/fi";
 import { BsBuildingAdd } from "react-icons/bs";
@@ -22,7 +21,7 @@ import vendedor from './assets/kgMarca.png';
 import icono from './assets/icono.jpg';
 import pordef from './assets/KsTienda2.png'
 import './CSS/login.css'
-import { useGet } from './hooks/useGet'
+import { useNavigate } from 'react-router-dom';
 const tarjetaLogin = { 
     width: '22rem', 
     maxHeight: '27rem', 
@@ -48,15 +47,8 @@ const barra = {
     backgroundColor: "rgba(33, 37, 41, 0.8)"
 }
 export function Login(){
-    const {info, loading} = useGet("/shoes/ver")
-    if(loading){
-      console.log("cargando...")
-    }else{
-      console.log(info)
-    }
-    const { mostrar } = useSelector((state)=>state.mostrando)
+
     const loginStyle = {
-        display: mostrar[0], 
         width: "100vw", 
         height: "100vh",
         backgroundImage: "url("+fondo+")",
@@ -158,40 +150,44 @@ function Unloggin(){
 }
 function Formulario({tipo, usuario}) {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const username = useRef()
   const pssword = useRef()
-
+  const comprobacion=(usuario, pass, comp, tp)=>{
+    console.log("va a comprobar")
+    fetch("http://localhost:9000/api/"+comp+"/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "usercomp": usuario,
+        "passcomp": pass
+      })
+    })
+      .then(response => response.json())
+      .then(({passby, nombre, id}) => {
+        if(passby){
+          handleClose()
+          dispatch(logear({nombre: nombre, id:tp, iu: id}))
+          navigate('/')
+        }
+      })
+      .catch(error => {
+        console.log("papu? "+error)
+      });
+    
+  }
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleDatos = () =>{
     if(usuario==="Administrador"){
-        if(username.current.value==="abc" && pssword.current.value==="abc"){
-          handleClose()
-          dispatch(cambiar(1))
-          dispatch(logear({nombre:"Admin", id:"1"}))
-        }
-        else{
-          alert("Usuario y/o Contraseña incorrecta para admin")
-        }
+      comprobacion(username.current.value, pssword.current.value, "admin", "1")
     }else if(usuario==="Marca"){
-      if(username.current.value==="abc" && pssword.current.value==="abc"){
-        handleClose()
-        dispatch(cambiar(1))
-        dispatch(logear({nombre:"343", id:"3"}))
-      }
-      else{
-        alert("Usuario y/o Contraseña incorrecta para distribuidor")
-      }
+      comprobacion(username.current.value, pssword.current.value, "marca", "3")
   }else if(usuario==="Cliente"){
-    if(username.current.value==="abc" && pssword.current.value==="abc"){
-      handleClose()
-      dispatch(cambiar(1))
-      dispatch(logear({nombre:"Usuario", id:"2"}))
-    }
-    else{
-      alert("Usuario y/o Contraseña incorrecta para cliente")
-    }
+      comprobacion(username.current.value, pssword.current.value, "user", "2")
     }
   }
   return (
@@ -260,20 +256,40 @@ export function RegistrarMarca({ho, setHo}){
     }
   })
   const handleDatos = ()=>{
-      let nombre = username.current.value
-      let password = pssword.current.value
-      let mail = email.current.value
-      let conf = confirmacion.current.value
-      let dsc = desc.current.value
-      console.log(nombre)
-      console.log(password)
-      console.log(mail)
-      console.log(conf)
-      console.log(dsc) 
+    if(username.current.value==="" || pssword.current.value==="" || desc.current.value==="" || confirmacion.current.value==="" || email.current.value==="" || url===pordef){
+      console.log("Llene todos los campos")
+     }
+     else if(confirmacion.current.value!==pssword.current.value){
+      console.log("La password no es igual")
+     }
+     else if(pssword.current.value.length<5){
+      console.log("La password debe tener como minimo 5 caracteres")
+     }else{
+      fetch("http://localhost:9000/api/marca/crear", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+          {
+            "nombre": username.current.value,
+            "password": pssword.current.value,
+            "descripcion": desc.current.value,
+            "correo": email.current.value,
+            "banner": url
+        
+        }
+        )
+      })
+        .then(response => response.json())
+        .then((data)=>{
+          console.log(data)
+        })
+     }
   }
   return (
       <div>
-        <Button className="mt-2" variant="." onMouseEnter={()=>setHo([false,false,false,true,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[3]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><BsBuildingAdd/></Button>
+        <Button className="py-2" variant="." onMouseEnter={()=>setHo([false,false,false,true,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[3]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><BsBuildingAdd/></Button>
         <Modal size="xl" show={show} onHide={handleClose}>
         <div style={formulario}>
           <Container>
@@ -376,18 +392,38 @@ export function Registrarse({ho, setHo}){
   const email = useRef()
   const confirmacion = useRef()
   const handleDatos = ()=>{
-      let nombre = username.current.value
-      let password = pssword.current.value
-      let mail = email.current.value
-      let conf = confirmacion.current.value
-      console.log(nombre)
-      console.log(password)
-      console.log(mail)
-      console.log(conf) 
+   if(username.current.value==="" || pssword.current.value==="" || confirmacion.current.value==="" || email.current.value===""){
+    console.log("Llene todos los campos")
+   }
+   else if(confirmacion.current.value!==pssword.current.value){
+    console.log("La password no es igual")
+   }
+   else if(pssword.current.value.length<5){
+    console.log("La password debe tener como minimo 5 caracteres")
+   }else{
+    fetch("http://localhost:9000/api/user/crear", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          "nombre": username.current.value,
+          "password": pssword.current.value,
+          "correo": email.current.value,
+          "compras": []
+      }
+      )
+    })
+      .then(response => response.json())
+      .then((data)=>{
+        console.log(data)
+      })
+   }
   }
   return (
       <div>
-        <Button className="mt-2" variant="." onMouseEnter={()=>setHo([false,true,false,false,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[1]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><FiUserPlus/></Button>
+        <Button className="py-2" variant="." onMouseEnter={()=>setHo([false,true,false,false,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[1]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><FiUserPlus/></Button>
         <Modal size="lg" show={show} onHide={handleClose}>
         <div style={formulario}>
           <Container>

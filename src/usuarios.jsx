@@ -1,4 +1,3 @@
-import { useSelector} from 'react-redux';
 import { filtro, titulo, navStart } from './inicio';
 import { AdminNavBar } from './navbar';
 import marca from './assets/login(2).png';
@@ -27,11 +26,9 @@ const icono = {
     borderRadius: "50px",
 }
 export function Usuarios(){
-    const {mostrar} = useSelector((state)=>state.mostrando)
     const [expo, setExpo] = useState(1)
     const [us, setUs] = useState("clientes")
     const usuariosStyle = {
-            display: mostrar[6],
             width: "100vw", 
             height: "100vh",
             backgroundImage: "url("+fondo+")",

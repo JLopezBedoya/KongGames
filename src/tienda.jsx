@@ -30,10 +30,17 @@ const tarjetas = {
 const jnombre = {
     fontSize: "15px",
     color: "white",
-    maxWidth: "280px",
-    minWidth: "280px",
+    maxWidth: "200px",
+    minWidth: "200px",
     margin: "0",
-    textAlign: "center"
+}
+const jprecio = {
+    fontSize: "14px",
+    color: "white",
+    maxWidth: "80px",
+    minWidth: "80px",
+    margin: "0 30px",
+    
 }
 const jzona = {
     height: "500px",
@@ -63,9 +70,7 @@ export const categorias = [
 export function Tienda(){
     const [busqueda, setBusqueda] = useState("Todos")
     const a = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-    const {mostrar} = useSelector((state)=>state.mostrando)
     const storeStyle = {
-        display: mostrar[2],
         width: "100vw", 
         height: "100vh",
         backgroundImage: "url("+fondo+")",
@@ -175,7 +180,7 @@ function Juegos({iu}){
             <Card style={tarjetas} onMouseEnter={userHover} onMouseLeave={noUserHover} onClick={agg} className='tarjeta'>
             <Card.Img style={cover} variant="top" src={compra? carrito:shoes} />
             <Card.Body>
-              <Card.Title style={jnombre}>nombre de los Zapatos</Card.Title>
+              <Card.Title><span style={jnombre}>nombre de los Zapatos</span><span style={jprecio}>$100000</span></Card.Title>
             </Card.Body>
           </Card>
         </Col>
