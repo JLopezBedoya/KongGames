@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { Juegos } from './tienda';
 import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -16,6 +17,8 @@ import punt from './assets/kgunder4.png';
 import nuevos from './assets/kgunder2.png';
 import fondo from './assets/ksInicio.png';
 import banner from './assets/kgMarca.png';
+
+import {useGet} from "./hooks/useGet"
 import './CSS/inicio.css';
 
 export const navStart = {
@@ -40,17 +43,6 @@ const distList = {
     height: "480px",
     overflow: "scroll",
     scrollbarWidth: "none",
-}
-const contBanner = {
-    width: "535px",
-    height: "210px",
-    overflow: "hidden",
-    borderRadius: "30px",
-    padding: "0",
-    backgroundImage: "url("+banner+")",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat"
 }
 const bannerName = {
     backgroundColor: "rgba(21,25,30,0.7)",
@@ -119,6 +111,13 @@ const valoradoFiltroff = {
     paddingLeft: "200px"
 }
 export function Inicio(){
+    const {info, loading} = useGet("/marca/nombres")
+    if(loading){
+    console.log("cargando...")
+    }else{
+    console.log(info)
+    }
+    const get = useGet("/shoes/datos")
     const startStyle = {
         width: "100vw", 
         height: "100vh",
@@ -135,39 +134,22 @@ export function Inicio(){
                 <Row style={{marginTop: "30px",}}>
                     <Col md={3}>
                     <ListGroup variant="flush" style={distList}>
-                        <MarcasLista nombre={"marca1"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca2"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca3"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca4"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca5"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca6"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca7"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca8"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca9"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca10"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca11"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca12"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca13"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca14"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca15"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca16"} desc={"adsawd awdawda wd awd"}/>
-                        <MarcasLista nombre={"marca17"} desc={"texto descriptivos"}/>
-                        <MarcasLista nombre={"marca18"} desc={"adsawd awdawda wd awd"}/>
+                        {loading ? <h1>cargando</h1>:info.nombres.map(e=><MarcasLista nombre={e}/>)}
                     </ListGroup>
                     </Col>
                     <Col md={9}>
                         <Row>
                             <Col>
-                                <BannerStart/>
+                                <BannerStart crg={loading} inf={info}/>
                             </Col>
                             <Col>
-                                <Mejor tipo={"Ultimas Unidades"} url={ult}/>
+                                <Mejor tipo={"Ultimas Unidades"} url={ult} datos={get}/>
                             </Col>
                         </Row>
                         <Row id="under">
-                            <Col><Under tipo={"Mas vendidos"} url={nuevos}/></Col>
-                            <Col><Under tipo={"Ultimos añadidos"} url={reciente}/></Col>
-                            <Col><Under tipo={"v.i.p"} url={punt}/></Col> 
+                            <Col><Under tipo={"Mas vendidos"} url={nuevos} datos={get}/></Col>
+                            <Col><Under tipo={"Ultimos añadidos"} url={reciente} datos={get}/></Col>
+                            <Col><Under tipo={"v.i.p"} url={punt} datos={get}/></Col> 
                         </Row>
                     </Col>
                 </Row>
@@ -176,26 +158,20 @@ export function Inicio(){
         </div>
     )
 }
-function MarcasLista({nombre, desc}){
+function MarcasLista({nombre}){
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handlerShow = () =>{
+        fetch("http://localhost:9000/api/marca/traer/"+nombre)
+        .then((data)=>data.json())
+        .then((info)=>console.log(info.details))
         setShow(true)
     }
     return(
         <>
             <ListGroup.Item action onClick={handlerShow} >{nombre}</ListGroup.Item>
-            <Modal size="lg" show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                    <h1 style={{color:"white"}}>{nombre}</h1>
-                    </Modal.Header>
-                    <p style={{color:"white"}}>{desc}</p>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button>
+            <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
+                <Modaldatos handleClose={handleClose} titulo={nombre}/>
             </Modal>
         </>
     )
@@ -241,7 +217,82 @@ function NavStart(){
         )
     }
 }
-function BannerStart(){
+function Modaldatos({handleClose, titulo}){
+    return(
+        <>
+             <Modal.Header closeButton>
+                    <h1 style={{color:"white"}}>{titulo}</h1>
+                    </Modal.Header>
+                    <p style={{color:"white"}}>descripcion</p>
+                    <Container  style={{marginLeft: "30px", height: "600px", overflow: "scroll"}} >
+                    <Row>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                        <Col md={4}>
+                            <Juegos iu={5} />
+                        </Col>
+                    </Row>
+                    </Container>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+        </>
+    )
+}
+function BannerStart({crg, inf}){
+    var bnr = banner
+    if(!crg)bnr = inf.banner[2]
+    const contBanner = {
+        width: "535px",
+        height: "210px",
+        overflow: "hidden",
+        borderRadius: "30px",
+        padding: "0",
+        backgroundImage: "url("+bnr+")",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+    }
     const [hover, setHover] = useState(false)
     const [show, setShow] = useState(false);
 
@@ -257,24 +308,18 @@ function BannerStart(){
     }
     return(
         <div style={contBanner}>
-            <div onClick={handlerShow} onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? bannerName: bannerOff}>
-                <p>Marca: KongShoes</p>
+            {crg ? <h1>Cargando</h1>:<>
+                <div onClick={handlerShow} onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? bannerName: bannerOff}>
+                <p>Marca: {inf.nombres[2]}</p>
             </div>
-            <Modal size="lg" show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                    <h1 style={{color:"white"}}>KongShoes</h1>
-                    </Modal.Header>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button>
+            <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
+                <Modaldatos handleClose={handleClose} titulo={"KongGames"}/>
             </Modal>
+            </>}
         </div>
     )
 }
-function Under({tipo, url}){
+function Under({tipo, url, datos}){
     const cover = {
         marginTop: "25px",
         width: "250px",
@@ -292,6 +337,14 @@ function Under({tipo, url}){
 
     const handleClose = () => setShow(false);
     const handlerShow = () =>{
+        if(datos.loading){
+            console.log("Cargando Papu")
+        }
+        else{
+            if(tipo==="Mas vendidos")console.log(datos.info.mejores)
+            if(tipo==="Ultimos añadidos")console.log(datos.info.ultimos)
+            if(tipo==="v.i.p")console.log(datos.info.precios)
+        }
         setShow(true)
     }
     const [hover, setHover] = useState(false)
@@ -306,25 +359,23 @@ function Under({tipo, url}){
             <div onClick={handlerShow}  onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? underFiltro:underFiltroff}>
                 <p style={underText}>{tipo}</p>
             </div>
-            <Modal size="lg" show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                    <h1 style={{color:"white"}}>{tipo}</h1>
-                    </Modal.Header>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button>
+            <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
+                <Modaldatos handleClose={handleClose} titulo={tipo}/>
             </Modal>
         </div>
     )
 }
-function Mejor({tipo, url}){
+function Mejor({tipo, url, datos}){
     const [hover, setHover] = useState(false)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handlerShow = () =>{
+        if(datos.loading){
+            console.log("Cargando Papu")
+        }
+        else{
+            console.log(datos.info.unidades)
+        }
         setShow(true)
     }
     const userHover=()=>{
@@ -350,16 +401,8 @@ function Mejor({tipo, url}){
             <div onClick={handlerShow} onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? valoradoFiltro:valoradoFiltroff}>
                 <p>{tipo}</p>
             </div>
-            <Modal size="lg" show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                    <h1 style={{color:"white"}}>{tipo}</h1>
-                    </Modal.Header>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button>
+            <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
+                <Modaldatos handleClose={handleClose} titulo={tipo}/>
             </Modal>
         </div>
     )

@@ -163,7 +163,7 @@ function StoreNavBar({busqueda}){
         )
     }
 }
-function Juegos({iu}){
+export function Juegos({iu}){
     const [compra, setCompra] = useState(false)
     const dispatch = useDispatch()
     const userHover = () =>{
@@ -196,12 +196,9 @@ function Jfiltros({filtros}){
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const handlerprecio = ({target}) => setRprecio(target.value)
-    console.log(distri)
     const handlerDatos = () =>{
-        console.log(distri.current)
         var filcat;
         var fildist;
-        if((distri!=null)&&(cat!=null)){
         filcat = cat.current.state.selectValue.map((e)=>(e.value))
         fildist = distri.current.state.selectValue.map((e)=>(e.value))
         filtros({
@@ -209,29 +206,8 @@ function Jfiltros({filtros}){
             categorias: filcat,
             precio: Rprecio
         })
-        }else if(distri!=null){
-            fildist = distri.current.state.selectValue.map((e)=>(e.value))
-            filtros({
-                Marcas: fildist,
-                categorias: [],
-                precio: Rprecio
-            })
-        }else if(cat!=null){
-            filcat = cat.current.state.selectValue.map((e)=>(e.value))
-            filtros({
-                Marcas: "ninguna",
-                categorias: filcat,
-                precio: Rprecio
-            })
-        }else{
-            filtros({
-                Marcas: "ninguna",
-                categorias: [],
-                precio: Rprecio
-            })
-        }
+        console.log(filtros)
     }
-
     const distribuidores = [
             {value: "Bethesda", label: "marca 1"},
             {value: "Devolver", label: "marca 2"},

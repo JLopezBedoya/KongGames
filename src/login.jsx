@@ -284,6 +284,9 @@ export function RegistrarMarca({ho, setHo}){
         .then(response => response.json())
         .then((data)=>{
           console.log(data)
+        }).finally(()=>{
+          alert("se ha creado la Marca")
+          handleClose()
         })
      }
   }
@@ -418,6 +421,9 @@ export function Registrarse({ho, setHo}){
       .then(response => response.json())
       .then((data)=>{
         console.log(data)
+      }).finally(()=>{
+        alert("se ha creado la cuenta")
+        handleClose()
       })
    }
   }
