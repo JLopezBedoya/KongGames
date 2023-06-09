@@ -3,7 +3,6 @@ import { Juegos } from './tienda';
 import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Col from 'react-bootstrap/Col';
@@ -112,11 +111,6 @@ const valoradoFiltroff = {
 }
 export function Inicio(){
     const {info, loading} = useGet("/marca/nombres")
-    if(loading){
-    console.log("cargando...")
-    }else{
-    console.log(info)
-    }
     const get = useGet("/shoes/datos")
     const startStyle = {
         width: "100vw", 
@@ -134,7 +128,7 @@ export function Inicio(){
                 <Row style={{marginTop: "30px",}}>
                     <Col md={3}>
                     <ListGroup variant="flush" style={distList}>
-                        {loading ? <h1>cargando</h1>:info.nombres.map(e=><MarcasLista nombre={e}/>)}
+                        {loading ? <h1>cargando</h1>:info.nombres.map(e=><MarcasLista key={e} nombre={e}/>)}
                     </ListGroup>
                     </Col>
                     <Col md={9}>
@@ -161,17 +155,21 @@ export function Inicio(){
 function MarcasLista({nombre}){
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
+    const [loading, setLoading] = useState(true);
+    const [ftch, setFtch] = useState()
     const handlerShow = () =>{
+        setLoading(true)
         fetch("http://localhost:9000/api/marca/traer/"+nombre)
         .then((data)=>data.json())
-        .then((info)=>console.log(info.details))
+        .then((info)=>setFtch(info))
+        .finally(()=>setLoading(false))
         setShow(true)
     }
     return(
         <>
             <ListGroup.Item action onClick={handlerShow} >{nombre}</ListGroup.Item>
-            <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
-                <Modaldatos handleClose={handleClose} titulo={nombre}/>
+            <Modal size="xl" show={show} onHide={handleClose} style={{height: "685px", overflow: "hidden", boderRadius: "50px"}}>
+                {loading? <h1>Cargando</h1>:<Modaldatos handleClose={handleClose} datos={ftch}/>}
             </Modal>
         </>
     )
@@ -217,65 +215,42 @@ function NavStart(){
         )
     }
 }
-function Modaldatos({handleClose, titulo}){
+function Modaldatos({datos}){
     return(
         <>
              <Modal.Header closeButton>
-                    <h1 style={{color:"white"}}>{titulo}</h1>
+                    <h1 style={{color:"white", textAlign: "center"}}> {datos.datos.nombre} </h1>
                     </Modal.Header>
-                    <p style={{color:"white"}}>descripcion</p>
-                    <Container  style={{marginLeft: "30px", height: "600px", overflow: "scroll"}} >
+                    <p style={{color:"white", textAlign: "center"}}> {datos.datos.descripcion} </p>
+                    <Container  style={{marginLeft: "30px", height: "460px", overflowY: "scroll", overflowX: "hidden"}} >
                     <Row>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
-                        <Col md={4}>
-                            <Juegos iu={5} />
-                        </Col>
+                        {datos.details.map((e, i)=>(
+                            <Col md={4}>
+                                <Juegos key={e.nombre+i} info={e} />
+                            </Col>
+                        ))}
                     </Row>
                     </Container>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
-                </Button>
+        </>
+    )
+}
+function Modalzapatos({datos, nombre}){
+    return(
+        <>
+             <Modal.Header closeButton>
+                    <h1 style={{color:"white", textAlign: "center"}}> {nombre} </h1>
+                    </Modal.Header>
+                    <Container  style={{marginLeft: "30px", height: "460px", overflowY: "scroll", overflowX: "hidden"}} >
+                        <Col>
+                            <Row>
+                                {datos.map((e, i)=>(
+                                    <Col md={4}>
+                                        <Juegos key={i+e.nombre} info={e} />
+                                    </Col>
+                                ))}
+                            </Row>
+                        </Col>
+                    </Container>
         </>
     )
 }
@@ -289,15 +264,23 @@ function BannerStart({crg, inf}){
         borderRadius: "30px",
         padding: "0",
         backgroundImage: "url("+bnr+")",
-        backgroundSize: "cover",
+        backgroundSize: "535px 210px",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
     }
     const [hover, setHover] = useState(false)
     const [show, setShow] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [ftch, setFtch] = useState()
 
     const handleClose = () => setShow(false);
+
     const handlerShow = () =>{
+        setLoading(true)
+        fetch("http://localhost:9000/api/marca/traer/"+inf.nombres[2])
+        .then((data)=>data.json())
+        .then((info)=>setFtch(info))
+        .finally(()=>setLoading(false))
         setShow(true)
     }
     const userHover=()=>{
@@ -313,7 +296,7 @@ function BannerStart({crg, inf}){
                 <p>Marca: {inf.nombres[2]}</p>
             </div>
             <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
-                <Modaldatos handleClose={handleClose} titulo={"KongGames"}/>
+                {loading? <h1>Cargando</h1>:<Modaldatos handleClose={handleClose} datos={ftch}/>}
             </Modal>
             </>}
         </div>
@@ -333,17 +316,17 @@ function Under({tipo, url, datos}){
         backgroundRepeat: "no-repeat",
         cursor: "pointer",
     }
+    const [enviar , setEnviar] = useState([])
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handlerShow = () =>{
         if(datos.loading){
             console.log("Cargando Papu")
         }
         else{
-            if(tipo==="Mas vendidos")console.log(datos.info.mejores)
-            if(tipo==="Ultimos añadidos")console.log(datos.info.ultimos)
-            if(tipo==="v.i.p")console.log(datos.info.precios)
+            if(tipo==="Mas vendidos")setEnviar(datos.info.mejores)
+            if(tipo==="Ultimos añadidos")setEnviar(datos.info.ultimos)
+            if(tipo==="v.i.p")setEnviar(datos.info.precios)
         }
         setShow(true)
     }
@@ -360,7 +343,7 @@ function Under({tipo, url, datos}){
                 <p style={underText}>{tipo}</p>
             </div>
             <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
-                <Modaldatos handleClose={handleClose} titulo={tipo}/>
+            {datos.loading? <h1>Cargando</h1>:<Modalzapatos handleClose={handleClose} nombre={tipo} datos={enviar}/>}
             </Modal>
         </div>
     )
@@ -370,12 +353,6 @@ function Mejor({tipo, url, datos}){
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handlerShow = () =>{
-        if(datos.loading){
-            console.log("Cargando Papu")
-        }
-        else{
-            console.log(datos.info.unidades)
-        }
         setShow(true)
     }
     const userHover=()=>{
@@ -402,7 +379,7 @@ function Mejor({tipo, url, datos}){
                 <p>{tipo}</p>
             </div>
             <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
-                <Modaldatos handleClose={handleClose} titulo={tipo}/>
+                {datos.loading ? <h1>Cargando</h1>:<Modalzapatos handleClose={handleClose} nombre={tipo} datos={datos.info.unidades}/>}
             </Modal>
         </div>
     )
