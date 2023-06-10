@@ -1,7 +1,5 @@
 import { filtro, titulo, navStart } from './inicio';
 import { UserNavBar } from './navbar';
-import marca from './assets/login(2).png';
-import zapato from './assets/imagen-2.png'
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/ksBiblioteca.png';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,6 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useGet } from './hooks/useGet';
 const cover = {
     minHeight: "150px",
     minWidth: "420px",
@@ -24,7 +24,9 @@ const shoes = {
     maxWidth: "400px",
 }
 export function Biblioteca(){
-    const [expo, setExpo] = useState(1)
+    const [expo, setExpo] = useState(0)
+    const {iu} = useSelector((state)=>state.logeado)
+    const {loading, info} = useGet("/user/comprados/"+iu)
     const bibliotecaStyle = {
             width: "100vw", 
             height: "100vh",
@@ -38,10 +40,10 @@ export function Biblioteca(){
                         <BiliotecaNav/>
                         <Row style={{marginTop: "30px",}}>
                             <Col md={8}>
-                                <Pantalla exp={expo}/>
+                                <Pantalla loading={loading} info={info} exp={expo}/>
                             </Col>
                             <Col md={4}>
-                                <Lista settear={setExpo}/>
+                                <Lista loading={loading} info={info} settear={setExpo}/>
                             </Col>
                         </Row>
                 </Container>
@@ -59,7 +61,7 @@ function BiliotecaNav(){
     </Navbar>
     )
 }
-function Lista({settear}){
+function Lista({settear, loading, info}){
     const distList = {
         borderRadius: "30px",
         maxWidth: "400px",
@@ -71,33 +73,18 @@ function Lista({settear}){
     const exponer= (id)=>settear(id)
     return(
     <ListGroup variant="flush" style={distList}>
-        <ListGroup.Item action onClick={()=>exponer(1)}>Bethesda</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(2)}>Rockstar</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(3)}>Ubisof</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(4)}>Devolver</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(5)}>Bethesda</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(6)}>Rockstar</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(7)}>Ubisof</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(8)}>Devolver</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(9)}>Bethesda</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(10)}>Rockstar</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(11)}>Ubisof</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(12)}>Devolver</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(13)}>Bethesda</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(14)}>Rockstar</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(15)}>Ubisof</ListGroup.Item>
-        <ListGroup.Item action onClick={()=>exponer(16)}>Devolver</ListGroup.Item>
+        {loading?<h1>Cargando</h1>:info.map(({producto}, id)=><ListGroup.Item action onClick={()=>exponer(id)}>{producto}</ListGroup.Item>)}
     </ListGroup>
     )
 }
-function Pantalla({exp}){
+function Pantalla({exp, loading, info}){
     return(
         <div style={{backgroundColor: "rgba(21,25,30,0.7)", borderRadius:"30px",height:"500px"}}>
-            <Container>
+            {loading?<h1>Cargando</h1>:<Container>
             <Row>
                 <Col className="offset-2 mb-3 mt-3">
                     <div style={cover}>
-                        <img style={cover} src={marca} alt="..."/>
+                        <img style={cover} src={info[exp].banner} alt="..."/>
                     </div>
                 </Col>
                 <Col>
@@ -106,7 +93,7 @@ function Pantalla({exp}){
             <Row>
                 <Col>
                     <div style={shoes}>
-                        <img style={shoes} src={zapato} alt="..."/>
+                        <img style={shoes} src={info[exp].foto} alt="..."/>
                     </div>
                 </Col>
                 <Col style={{color: "white"}}>
@@ -115,7 +102,7 @@ function Pantalla({exp}){
                             <p>Nombre: </p>
                         </Col>
                         <Col>
-                            <p>Zapato Generico {exp}</p>
+                            <p>{info[exp].producto}</p>
                         </Col>
                     </Row>
                     <Row className="my-3">
@@ -123,7 +110,7 @@ function Pantalla({exp}){
                             <p>compra: </p>
                         </Col>
                         <Col>
-                            <p>10/11/2009</p>
+                            <p>{info[exp].fecha}</p>
                         </Col>
                     </Row>
                     <Row className="my-3">
@@ -131,12 +118,20 @@ function Pantalla({exp}){
                             <p>Precio: </p>
                         </Col>
                         <Col>
-                            <p>$190000</p>
+                            <p>{info[exp].precio}</p>
+                        </Col>
+                    </Row>
+                    <Row className="my-3">
+                        <Col md={3}>
+                            <p>Marca: </p>
+                        </Col>
+                        <Col>
+                            <p>{info[exp].marca}</p>
                         </Col>
                     </Row>
                 </Col>
             </Row>
-            </Container>
+            </Container>}
         </div>
     )
 }

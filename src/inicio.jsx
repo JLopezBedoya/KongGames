@@ -255,8 +255,12 @@ function Modalzapatos({datos, nombre}){
     )
 }
 function BannerStart({crg, inf}){
-    var bnr = banner
-    if(!crg)bnr = inf.banner[2]
+    var bnr = banner;
+    var mostrar = 0
+    if(!crg){
+        mostrar = (inf.banner.length-1)
+        bnr = inf.banner[mostrar]
+    }
     const contBanner = {
         width: "535px",
         height: "210px",
@@ -277,7 +281,7 @@ function BannerStart({crg, inf}){
 
     const handlerShow = () =>{
         setLoading(true)
-        fetch("http://localhost:9000/api/marca/traer/"+inf.nombres[2])
+        fetch("http://localhost:9000/api/marca/traer/"+inf.nombres[mostrar])
         .then((data)=>data.json())
         .then((info)=>setFtch(info))
         .finally(()=>setLoading(false))
@@ -293,7 +297,7 @@ function BannerStart({crg, inf}){
         <div style={contBanner}>
             {crg ? <h1>Cargando</h1>:<>
                 <div onClick={handlerShow} onMouseEnter={userHover} onMouseLeave={noUserHover} style={hover? bannerName: bannerOff}>
-                <p>Marca: {inf.nombres[2]}</p>
+                <p>Marca: {inf.nombres[mostrar]}</p>
             </div>
             <Modal size="xl" show={show} onHide={handleClose} style={{height: "625px", overflow: "hidden", boderRadius: "50px"}}>
                 {loading? <h1>Cargando</h1>:<Modaldatos handleClose={handleClose} datos={ftch}/>}
@@ -303,6 +307,14 @@ function BannerStart({crg, inf}){
     )
 }
 function Under({tipo, url, datos}){
+    if(datos.loading){
+        console.log("Cargando Papu")
+    }
+    else{
+        if(tipo==="Mas vendidos")url = (datos.info.mejores[0].foto)
+        if(tipo==="Ultimos añadidos")url = (datos.info.ultimos[0].foto)
+        if(tipo==="v.i.p")url = (datos.info.precios[0].foto)
+    }
     const cover = {
         marginTop: "25px",
         width: "250px",
@@ -349,6 +361,7 @@ function Under({tipo, url, datos}){
     )
 }
 function Mejor({tipo, url, datos}){
+    if(!datos.loading)url = datos.info.unidades[0].foto
     const [hover, setHover] = useState(false)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);

@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { filtro, titulo, navStart } from './inicio';
 import { add } from './redux/carritoslice';
 import { UserNavBar, AdminNavBar, MarcaNavBar, NoUserNavBar } from './navbar';
@@ -102,36 +102,39 @@ export function Tienda(){
 
 
 function StoreNavBar({ busqueda, dt }) {
-    const [opt, setOpt] = useState([]);
     const { id } = useSelector((state) => state.logeado);
-    var load = dt.loading
     const buscar = (e) => {
-      busqueda({
-        "Marca": null,
-        "Categoria": null,
-        "precio": null,
-        "nombre": e.value
-      });
+      if(e===undefined || e===null){
+        busqueda({
+            "Marca": null,
+            "Categoria": null,
+            "precio": null,
+            "nombre": null
+          });
+      }
+      else{
+        busqueda({
+            "Marca": null,
+            "Categoria": null,
+            "precio": null,
+            "nombre": e.value
+          });
+      }
     };
-    useEffect(() => {
-      if (!load) {
-        var a = dt.info.Nombres.map((e) => {
+    if (!dt.loading) {
+        var opt = dt.info.Nombres.map((e) =>{
           return {
             value: e,
             label: e
-          };
-        });
-        setOpt(a);
-      }
-    }, [load]);
-    var def = [{ value: 'cargando', label: 'Cargando...' }];
+          }})
+        }
     if(id==="2"){
         return(
             <Navbar style={navStart}>
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
-            <Nav.Link style={{width:"400px" }}><Select onChange={buscar} isClearable options={load ? def : opt} /></Nav.Link>
+            <Nav.Link style={{width:"400px" }}>{dt.loading?<h2>Cargando...</h2>:<Select onChange={buscar} isClearable options={opt} />}</Nav.Link>
         
             </Nav>
             <UserNavBar/>
@@ -145,7 +148,7 @@ function StoreNavBar({ busqueda, dt }) {
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
-            <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={load ? def : opt} /></Nav.Link>
+            <Nav.Link style={{width:"400px" }}>{dt.loading?<h2>Cargando...</h2>:<Select onChange={buscar} isClearable options={opt} />}</Nav.Link>
         
             </Nav>
             <AdminNavBar/>
@@ -158,7 +161,7 @@ function StoreNavBar({ busqueda, dt }) {
         <Container>
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
         <Nav>
-        <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={load ? def : opt} /></Nav.Link>
+        <Nav.Link style={{width:"400px" }}>{dt.loading?<h2>Cargando...</h2>:<Select onChange={buscar} isClearable options={opt} />}</Nav.Link>
         
         </Nav>
         <MarcaNavBar/>
@@ -171,7 +174,7 @@ function StoreNavBar({ busqueda, dt }) {
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
-                <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={load ? def : opt} /></Nav.Link>
+                <Nav.Link style={{width:"400px" }}>{dt.loading?<h2>Cargando...</h2>:<Select onChange={buscar} isClearable options={opt} />}</Nav.Link>
         
             </Nav>
             <NoUserNavBar/>
@@ -190,7 +193,14 @@ export function Juegos({info}){
         setCompra(false)
     }
     const agg = () =>{
-         dispatch(add(info.id))
+         dispatch(add({
+            id: info._id,
+            nombre: info.nombre,
+            marca: info.Marca,
+            precio: info.precio,
+            foto: info.foto,
+            cantidad: info.cantidad
+         }))
     }
     return(
         <Col md={3}>

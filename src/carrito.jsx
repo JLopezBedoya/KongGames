@@ -9,7 +9,6 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import template from "./assets/imagen-3.png"
 
 const compra = {
     height: "200px",
@@ -69,7 +68,7 @@ export function Carrito(){
                         <CarritoNav/>
                             <Row>
                                 <Col>
-                                    <Info />
+                                    <Info carrito={save} />
                                 </Col>
                                 <Col>
                                     <Container style={{height: "550px", overflow: "scroll", scrollbarWidth: "none"}}>
@@ -96,37 +95,59 @@ function CarritoNav(){
 }
 function Compras({datos, iu}){
     const dispatch = useDispatch()
-    const comprar = () =>{
-        alert("Zapatos comprar")
-        dispatch(remove(iu))
-    }
+    const prod = useSelector((state)=>state.logeado.iu)
     const quitar = ()=>{
         dispatch(remove(iu))
+    }
+    const comprar=()=>{
+         fetch("http://localhost:9000/api/user/comprar", {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    "producto": datos.id,
+                    "usuario": prod
+                }
+            )
+        })
+            .then(response => response.json())
+            .finally(()=>{
+                alert("Usted ha comprado "+datos.nombre)
+                dispatch(remove(iu))
+            })
     }
     return(
         <div style={compra}>
             <Row>
                 <Col style={{padding:"0", marginRight: "10px"}} md={4}>
                     <div style={cover}>
-                        <img src={template} style={foto} alt='...'/>
+                        <img src={datos.foto} style={foto} alt='...'/>
                     </div>
                 </Col>
                 <Col>
                     <Row style={{marginTop:"20px"}}>
-                        <Col md={8}>
-                            <p>Zapatos #{datos} </p>
-                        </Col>
-                        <Col>
-                            <p>$190.000</p>
-                        </Col>
-                    </Row>
-                    <Row style={{marginTop:"20px"}}>
-                        <Col md={8}>
-                            <p>Marca Del Zapatos</p>
-                        </Col>
-                        <Col>
-                            <p>9/10</p>
-                        </Col>
+                    <Col>
+                        <Row>
+                            <Col md={4}><p>Nombre:</p></Col>
+                            <Col><p>{datos.nombre}</p></Col>
+                        </Row>
+                    </Col>
+                    <Col>
+                        <Row>
+                            <Col md={4}><p>Precio</p></Col>
+                            <Col><p>{datos.precio}</p></Col>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row style={{marginTop:"20px"}}>
+                    <Col>
+                        <Row>
+                            <Col md={4}><p>Marca</p></Col>
+                            <Col><p>{datos.marca} </p></Col>
+                        </Row>
+                    </Col>
                     </Row>
                     <Row style={{marginTop:"20px", paddingRight:"10px"}}>
                         <ButtonGroup aria-label="Basic example">
@@ -139,7 +160,11 @@ function Compras({datos, iu}){
         </div>
     )
 }
-function Info(){
+function Info({carrito}){
+    let precio = carrito.map(({precio})=>precio)
+    let final
+    let long = carrito.length
+    if(long>0)final  = precio.reduce((a,b)=>{return a+b})
     const dispatch = useDispatch()
     return(
         <div style={panel}>
@@ -152,7 +177,7 @@ function Info(){
                             <p>total de productos:</p>
                         </Col>
                         <Col>
-                            <p>5</p>
+                            <p>{long}</p>
                         </Col>
                     </Row>
                     <Row style={{margin: "10px 0"}}>
@@ -160,12 +185,11 @@ function Info(){
                             <p>Total de compra:</p>
                         </Col>
                         <Col>
-                            <p>$550</p>
+                            <p>${final}</p>
                         </Col>
                     </Row>
                     <Row>
                     <ButtonGroup vertical>
-                        <Button variant="success">Comprar Todo</Button>
                         <Button onClick={()=>dispatch(clear())} variant="danger">Vaciar carrito</Button>
                     </ButtonGroup>
                 </Row>
