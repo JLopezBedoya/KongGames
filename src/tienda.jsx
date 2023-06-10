@@ -1,16 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { filtro, titulo, navStart } from './inicio';
 import { add } from './redux/carritoslice';
 import { UserNavBar, AdminNavBar, MarcaNavBar, NoUserNavBar } from './navbar';
 import Container from 'react-bootstrap/Container';
 import fondo from './assets/KsTienda.png';
 import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Offcanvas from 'react-bootstrap/Offcanvas';
 import Card from 'react-bootstrap/Card';
 import Select from 'react-select';
 import Nav from 'react-bootstrap/Nav';
@@ -134,8 +131,8 @@ function StoreNavBar({ busqueda, dt }) {
             <Container>
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
-            <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={load ? def : opt} /></Nav.Link>
-                <Nav.Link><Jfiltros filtros={busqueda} dt={dt}/></Nav.Link>
+            <Nav.Link style={{width:"400px" }}><Select onChange={buscar} isClearable options={load ? def : opt} /></Nav.Link>
+        
             </Nav>
             <UserNavBar/>
             </Container>
@@ -149,7 +146,7 @@ function StoreNavBar({ busqueda, dt }) {
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
             <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={load ? def : opt} /></Nav.Link>
-                <Nav.Link><Jfiltros filtros={busqueda} dt={dt}/></Nav.Link>
+        
             </Nav>
             <AdminNavBar/>
             </Container>
@@ -162,7 +159,7 @@ function StoreNavBar({ busqueda, dt }) {
         <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
         <Nav>
         <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={load ? def : opt} /></Nav.Link>
-            <Nav.Link><Jfiltros filtros={busqueda} dt={dt}/></Nav.Link>    
+        
         </Nav>
         <MarcaNavBar/>
         </Container>
@@ -175,7 +172,7 @@ function StoreNavBar({ busqueda, dt }) {
             <Navbar.Brand style={titulo}>KongShoes</Navbar.Brand>
             <Nav>
                 <Nav.Link style={{width:"400px" }}><Select onChange={buscar} options={load ? def : opt} /></Nav.Link>
-                <Nav.Link><Jfiltros filtros={busqueda} dt={dt}/></Nav.Link>
+        
             </Nav>
             <NoUserNavBar/>
             </Container>
@@ -206,83 +203,3 @@ export function Juegos({info}){
         </Col>
     )
 }
-function Jfiltros({ filtros, dt }) {
-    const [show, setShow] = useState(false);
-    const [Rprecio, setRprecio] = useState(0);
-    const [opt, setOpt] = useState([]);
-    const [opc, setOpc] = useState([]);
-    const [min, setMin] = useState()
-    const [max, setMax] = useState()
-    const distri = useRef(null);
-    const cat = useRef(null);
-  
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const handlerprecio = ({ target }) => setRprecio(target.value);
-  
-    const handlerDatos = () => {
-      var filcat;
-      var fildist;
-      filcat = cat.current.state.selectValue.map((e) => e.value);
-      fildist = distri.current.state.selectValue.map((e) => e.value);
-      var fltros = {
-        Marca: fildist[0],
-        categorias: filcat,
-        precio: Rprecio
-      };
-      if (fltros.Marca === undefined) fltros.Marca = null;
-      if (fltros.categorias.length === 0) fltros.categorias = null;
-      filtros(fltros)
-    };
-  
-    useEffect(() => {
-      if (!dt.loading) {
-        if (!dt.loading) {
-            var a = dt.info.marcas.map((e) => {
-              return {
-                value: e,
-                label: e
-              };
-            });
-            var b = dt.info.categorias.map((e) => {
-                return {
-                  value: e,
-                  label: e
-                };
-              });
-               setMin(dt.info.preciomin)
-               setMax(dt.info.preciomax)
-            setOpt(a);
-            setOpc(b)
-          }
-      }
-    }, [dt.loading]);
-  
-    var def = [{ value: 'cargando', label: 'Cargando...' }];
-  
-    return (
-      <div>
-        <Button variant="info" onClick={handleShow}>
-          Ver filtros
-        </Button>
-        <Offcanvas show={show} onHide={handleClose}>
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title className="otro">Filtrar Busqueda de zapatos</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <Form>
-              <Form.Group className="mb-3">
-                <Select className="my-4" ref={distri} placeholder="Marca" isClearable={true} options={dt.loading ? def : opt} />
-                <Select className="mb-4" ref={cat} placeholder="categorias" isMulti options={dt.loading ? def : opc} />
-                <Form.Label className="otro">Rango de precio: {(Rprecio===0)? max:Rprecio} </Form.Label>
-                <Form.Range defaultValue={dt.loading ? 100 : max} min={dt.loading ? 0 : min} max={dt.loading ? 100 : max} onChange={handlerprecio} />
-              </Form.Group>
-              <Button variant="light" className="my-4" onClick={handlerDatos}>
-                Aplicar Filtros
-              </Button>
-            </Form>
-          </Offcanvas.Body>
-        </Offcanvas>
-      </div>
-    );
-  }

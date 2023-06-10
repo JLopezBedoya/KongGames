@@ -14,7 +14,7 @@ const userSlice = createSlice({
             estado.iu = iu
         },
         deslogear:(estado)=>{
-            estado.nombre = "nombre"
+            estado.nombre = "Cliente"
             estado.id = "0"
             estado.iu = "0"
         }

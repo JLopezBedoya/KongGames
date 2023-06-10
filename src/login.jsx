@@ -490,7 +490,7 @@ export function Registrarse({ho, setHo}){
       </div>
     );
 }
-function checkImage(url) {
+export function checkImage(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     
