@@ -15,11 +15,13 @@ import './CSS/tienda.css';
 import carrito from "./assets/agg.jpg"
 import { usePost } from './hooks/usePost'
 import { useGet } from './hooks/useGet';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const tarjetas = {
     maxWidth: "280px",
     minWidth: "280px",
-    maxHeight: "265px",
-    minHeight: "265px",
+    maxHeight: "270px",
+    minHeight: "270px",
     overflow: "hidden",
     marginBottom: "20px",
     backgroundColor: "rgba(33, 37, 41, 0.7)",
@@ -186,6 +188,7 @@ function StoreNavBar({ busqueda, dt }) {
 export function Juegos({info}){
     const [compra, setCompra] = useState(false)
     const dispatch = useDispatch()
+    const { id } = useSelector((state) => state.logeado);
     const userHover = () =>{
         setCompra(true)
     }
@@ -193,6 +196,17 @@ export function Juegos({info}){
         setCompra(false)
     }
     const agg = () =>{
+        if(id==="2"){
+        toast.success('Se ha agregado '+info.nombre+' al carrito', {
+            position: "bottom-right",
+            autoClose: 2400,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
          dispatch(add({
             id: info._id,
             nombre: info.nombre,
@@ -201,9 +215,23 @@ export function Juegos({info}){
             foto: info.foto,
             cantidad: info.cantidad
          }))
+        }
+        else{
+            toast.error('Solo los usuarios pueden acceder al carrito', {
+                position: "bottom-right",
+                autoClose: 2400,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+        }
     }
     return(
         <Col md={3}>
+            <ToastContainer/>
             <Card style={tarjetas} onMouseEnter={userHover} onMouseLeave={noUserHover} onClick={agg} className='tarjeta'>
             <Card.Img style={cover} variant="top" src={compra? carrito:info.foto} />
             <Card.Body>

@@ -2,7 +2,7 @@
 import { useDispatch } from 'react-redux';
 import { deslogear } from './redux/usuarioSlice';
 import { clear } from './redux/carritoslice';
-import { BiStoreAlt, BiBlanket, BiLogOut, BiCoinStack,BiCategoryAlt, BiCartAlt,  BiHomeAlt, BiLogIn } from "react-icons/bi";
+import { BiStoreAlt, BiBlanket, BiLogOut, BiCoinStack,BiCartAlt,  BiHomeAlt, BiLogIn } from "react-icons/bi";
 import { Registrarse, RegistrarMarca } from "./login";
 import Nav from 'react-bootstrap/Nav';
 import { useState } from "react";
@@ -43,7 +43,6 @@ export function AdminNavBar(){
             <Nav.Link><Link class="mx-1" variant="."  onMouseEnter={()=>setHo([false,true,false,false,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[1]?{color:"coral", fontSize:"20px"}:{color:"white", fontSize:"20px"}} to={'/'}><BiHomeAlt/></Link></Nav.Link>
             <Nav.Link><Link class="mx-1" variant="."  onMouseEnter={()=>setHo([false,false,true,false,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[2]?{color:"coral", fontSize:"20px"}:{color:"white", fontSize:"20px"}} to={'/tienda'}><BiStoreAlt/></Link></Nav.Link>
             <Nav.Link><Link class="mx-1" variant="."  onMouseEnter={()=>setHo([false,false,false,true,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[3]?{color:"coral", fontSize:"20px"}:{color:"white", fontSize:"20px"}} to={'/bodega'}><BiCoinStack/></Link></Nav.Link>
-            <Nav.Link><Link class="mx-1" variant="."  onMouseEnter={()=>setHo([false,false,false,false,true])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[4]?{color:"coral", fontSize:"20px"}:{color:"white", fontSize:"20px"}} to={'/usuarios'}><BiCategoryAlt/></Link></Nav.Link>
         </Nav>
     )
 }

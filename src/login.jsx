@@ -22,6 +22,9 @@ import icono from './assets/icono.jpg';
 import pordef from './assets/KsTienda2.png'
 import './CSS/login.css'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const tarjetaLogin = { 
     width: '22rem', 
     maxHeight: '27rem', 
@@ -167,15 +170,45 @@ function Formulario({tipo, usuario}) {
       })
     })
       .then(response => response.json())
-      .then(({passby, nombre, id}) => {
+      .then(({passby, nombre, id, razon}) => {
         if(passby){
+          toast.success('Bienvenido '+nombre+'!!', {
+            position: "bottom-right",
+            autoClose: 2400,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
           handleClose()
           dispatch(logear({nombre: nombre, id:tp, iu: id}))
-          navigate('/')
+          setTimeout(()=>navigate('/'), 2500)
+        }else{
+          toast.warn(razon, {
+            position: "bottom-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
         }
       })
       .catch(error => {
-        console.log("papu? "+error)
+        toast.warn("Hubo un error: "+error, {
+          position: "bottom-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
       });
     
   }
@@ -192,6 +225,7 @@ function Formulario({tipo, usuario}) {
   }
   return (
     <div>
+      <ToastContainer/>
       <Button style={boton} variant={tipo} onClick={handleShow}>Iniciar Sesion</Button>
       <Modal show={show} onHide={handleClose}>
       <div className='formulario'>
@@ -252,18 +286,55 @@ export function RegistrarMarca({ho, setHo}){
     if (validacion) {
       setUrl(url)
     } else {
+      toast.warn("URL no valida", {
+        position: "bottom-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
       setUrl(pordef)
     }
   })
   const handleDatos = ()=>{
     if(username.current.value==="" || pssword.current.value==="" || desc.current.value==="" || confirmacion.current.value==="" || email.current.value==="" || url===pordef){
-      console.log("Llene todos los campos")
+      toast.warn("Llene todos los campos", {
+        position: "bottom-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
      }
      else if(confirmacion.current.value!==pssword.current.value){
-      console.log("La password no es igual")
+      toast.warn("Las password no concuerdan", {
+        position: "bottom-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
      }
      else if(pssword.current.value.length<5){
-      console.log("La password debe tener como minimo 5 caracteres")
+      toast.warn("la password debe tener como minimo 5 caracteres", {
+        position: "bottom-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
      }else{
       fetch("http://localhost:9000/api/marca/crear", {
         method: 'POST',
@@ -285,13 +356,23 @@ export function RegistrarMarca({ho, setHo}){
         .then((data)=>{
           console.log(data)
         }).finally(()=>{
-          alert("se ha creado la Marca")
+          toast.success("Se ha creado la marca exitosamente", {
+            position: "bottom-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
           handleClose()
         })
      }
   }
   return (
       <div>
+      <ToastContainer/>
         <Button className="py-2" variant="." onMouseEnter={()=>setHo([false,false,false,true,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[3]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><BsBuildingAdd/></Button>
         <Modal size="xl" show={show} onHide={handleClose}>
         <div style={formulario}>
@@ -396,13 +477,40 @@ export function Registrarse({ho, setHo}){
   const confirmacion = useRef()
   const handleDatos = ()=>{
    if(username.current.value==="" || pssword.current.value==="" || confirmacion.current.value==="" || email.current.value===""){
-    console.log("Llene todos los campos")
+    toast.warn("Llene todos los campos", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
    }
    else if(confirmacion.current.value!==pssword.current.value){
-    console.log("La password no es igual")
+    toast.warn("las password no coinciden", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
    }
    else if(pssword.current.value.length<5){
-    console.log("La password debe tener como minimo 5 caracteres")
+    toast.warn("la password debe tener como minimo 5 caracteres", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
    }else{
     fetch("http://localhost:9000/api/user/crear", {
       method: 'POST',
@@ -422,13 +530,23 @@ export function Registrarse({ho, setHo}){
       .then((data)=>{
         console.log(data)
       }).finally(()=>{
-        alert("se ha creado la cuenta")
+        toast.success("Se ha creado la cuenta exitosamente", {
+          position: "bottom-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         handleClose()
       })
    }
   }
   return (
       <div>
+        <ToastContainer/>
         <Button className="py-2" variant="." onMouseEnter={()=>setHo([false,true,false,false,false])} onMouseLeave={()=>setHo([false,false,false,false,false])} style={ho[1]?{color:"yellow", fontSize:"20px"}:{color:"white", fontSize:"20px"}} onClick={handleShow}><FiUserPlus/></Button>
         <Modal size="lg" show={show} onHide={handleClose}>
         <div style={formulario}>

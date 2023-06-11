@@ -9,7 +9,8 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const compra = {
     height: "200px",
     width: "700px",
@@ -98,6 +99,16 @@ function Compras({datos, iu}){
     const prod = useSelector((state)=>state.logeado.iu)
     const quitar = ()=>{
         dispatch(remove(iu))
+        toast.error('Se quito '+datos.nombre+" del carrito", {
+            position: "bottom-right",
+            autoClose: 2400,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
     }
     const comprar=()=>{
          fetch("http://localhost:9000/api/user/comprar", {
@@ -114,12 +125,22 @@ function Compras({datos, iu}){
         })
             .then(response => response.json())
             .finally(()=>{
-                alert("Usted ha comprado "+datos.nombre)
                 dispatch(remove(iu))
             })
+            toast.success('Se ha comprado '+datos.nombre, {
+                position: "bottom-right",
+                autoClose: 2400,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
     }
     return(
         <div style={compra}>
+            <ToastContainer/>
             <Row>
                 <Col style={{padding:"0", marginRight: "10px"}} md={4}>
                     <div style={cover}>

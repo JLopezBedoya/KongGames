@@ -73,14 +73,20 @@ function Lista({settear, loading, info}){
     const exponer= (id)=>settear(id)
     return(
     <ListGroup variant="flush" style={distList}>
-        {loading?<h1>Cargando</h1>:info.map(({producto}, id)=><ListGroup.Item action onClick={()=>exponer(id)}>{producto}</ListGroup.Item>)}
+        {loading?<h1>Cargando</h1>:(info===undefined)?<h1>no hay productos</h1>:info.map(({producto}, id)=><ListGroup.Item action onClick={()=>exponer(id)}>{producto}</ListGroup.Item>)}
     </ListGroup>
     )
 }
 function Pantalla({exp, loading, info}){
     return(
         <div style={{backgroundColor: "rgba(21,25,30,0.7)", borderRadius:"30px",height:"500px"}}>
-            {loading?<h1>Cargando</h1>:<Container>
+            {loading?<h1>Cargando</h1>:(info===undefined || info.length===0)?<h1>aqui se veran los productos que compres</h1>:<Mostrando exp={exp} info={info}/>}
+        </div>
+    )
+}
+function Mostrando({info, exp}){
+    return(
+        <Container>
             <Row>
                 <Col className="offset-2 mb-3 mt-3">
                     <div style={cover}>
@@ -107,14 +113,6 @@ function Pantalla({exp, loading, info}){
                     </Row>
                     <Row className="my-3">
                         <Col md={3}>
-                            <p>compra: </p>
-                        </Col>
-                        <Col>
-                            <p>{info[exp].fecha}</p>
-                        </Col>
-                    </Row>
-                    <Row className="my-3">
-                        <Col md={3}>
                             <p>Precio: </p>
                         </Col>
                         <Col>
@@ -131,7 +129,6 @@ function Pantalla({exp, loading, info}){
                     </Row>
                 </Col>
             </Row>
-            </Container>}
-        </div>
+            </Container>
     )
 }

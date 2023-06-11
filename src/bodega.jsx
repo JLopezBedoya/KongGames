@@ -15,6 +15,8 @@ import {  AdminNavBar, MarcaNavBar } from './navbar';
 import {checkImage} from './login'
 import im from './assets/ksLogin.png'
 import { useGet } from './hooks/useGet';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const compra = {
     height: "480px",
     width: "300px",
@@ -69,7 +71,7 @@ export function Bodega(){
                         <Col md={7} style={{overflow: "scroll", scrollbarWidth: "none", height: "510px",}}>
                         {(id==="1")?<Row>
                                 {loading? <h2>Cargando...</h2>:info.map(e=><Col>
-                                    <Productos datos={e}/>
+                                    <Productos datos={e}/> 
                                 </Col>)}
                             </Row>:<Row>
                                 {get.loading? <h2>Cargando...</h2>:get.info.details.map(e=><Col>
@@ -180,7 +182,16 @@ function Actualizar({datos}){
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(()=>alert("se ha borrado el producto"))
+  }).then(()=>toast.error('Se ha borrado el producto', {
+    position: "bottom-right",
+    autoClose: 2400,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+    }))
   }
   const handleShow = () => {
     setCrg(true)
@@ -216,12 +227,22 @@ function Actualizar({datos}){
         .then((data)=>{
           console.log(data)
         }).finally(()=>{
-          alert("Se ha actualizado el producto")
+            toast.info("Se ha actualizado el producto", {
+                position: "bottom-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
           handleClose()
         })
   }
   return (
     <Row>
+        <ToastContainer/>
         <ButtonGroup>
             <Button style={{width:"100px"}} variant="primary" onClick={handleShow}>Actualizar</Button>
             <Button style={{width:"100px"}} variant="danger" onClick={borrar}>Borrar</Button>
@@ -369,7 +390,7 @@ function Admininfo({id, get}){
                                 <p>Producto mas vendido:</p>
                             </Col>
                             <Col>
-                                <p>{get.info.details[0].nombre}</p>
+                                <p>{(get.info.details[0]===undefined)?"no hay productos":get.info.details[0].nombre}</p>
                             </Col>
                         </Row>
                         <Row>
@@ -433,11 +454,29 @@ function Agg(){
                 })
                     .then(response => response.json())
                     .finally(()=>{
-                        alert("Se ha creado el producto")
+                        toast.info("Se ha Creado el producto", {
+                            position: "bottom-right",
+                            autoClose: 2500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                            });
                         handleClose()
                     })
                     }else{
-                        alert("imagen invalida")
+                        toast.error("Imagen no valida", {
+                            position: "bottom-right",
+                            autoClose: 2500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                            });
                     }
                 })
     }else{
@@ -446,6 +485,7 @@ function Agg(){
   }
   return (
     <Row>
+        <ToastContainer/>
         <ButtonGroup>
             <Button variant="primary" onClick={handleShow}>Agregar</Button>
             <Button variant="info" onClick={handlevent}>Peticiones</Button>
@@ -520,11 +560,29 @@ function Peticion({datos}){
                 })
                     .then(response => response.json())
                     .finally(()=>{
-                        alert("Se ha creado la peticion")
+                        toast.info("Se ha Creado la peticion", {
+                            position: "bottom-right",
+                            autoClose: 2500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                            });
                         handleClose()
                     })
                     }else{
-                        alert("imagen invalida")
+                        toast.error("imagen invalida", {
+                            position: "bottom-right",
+                            autoClose: 2500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                            });
                     }
                 })
     }else{
@@ -537,6 +595,7 @@ function Peticion({datos}){
 
   return (
     <Row>
+        <ToastContainer/>
         <Button variant="primary" onClick={handleShow}>Agregar</Button>
       <Modal show={show} onHide={handleClose}>
         <h1 style={{color:"white", textAlign: "center"}}>Añadir peticion</h1>
@@ -590,16 +649,40 @@ function ListaPeticiones({datos, cerrar}){
     }
     const aceptar = ()=>{
         fetch("http://localhost:9000/api/peticiones/aceptar/"+datos._id)
-        .then(()=>alert("Se ha agregado el producto"))
+        .then(()=>toast.info("Se ha Creado el producto", {
+            position: "bottom-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            }))
         cerrar()
     }
     const rechazar = ()=>{
-        fetch("http://localhost:9000/api/peticiones/rechazar/"+datos._id)
-        .then(()=>alert("Se ha agregado el producto"))
+        fetch("http://localhost:9000/api/peticiones/rechazar/"+datos._id, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+                }
+        })
+        .then(()=>toast.info("Se ha rechazado el producto", {
+            position: "bottom-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            }))
         cerrar()
     }
     return(
         <div style={pet}>
+        <ToastContainer/>
             <Row>
                 <Col style={{padding:"0", marginRight: "10px"}} md={4}>
                     <div style={cover}>
