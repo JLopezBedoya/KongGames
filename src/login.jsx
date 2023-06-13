@@ -199,7 +199,7 @@ function Formulario({tipo, usuario}) {
         }
       })
       .catch(error => {
-        toast.warn("Hubo un error: "+error, {
+        toast.error("Hubo un error: "+error, {
           position: "bottom-right",
           autoClose: 2500,
           hideProgressBar: false,
@@ -313,7 +313,7 @@ export function RegistrarMarca({ho, setHo}){
         });
      }
      else if(confirmacion.current.value!==pssword.current.value){
-      toast.warn("Las password no concuerdan", {
+      toast.warn("Las Contraseña no concuerdan", {
         position: "bottom-right",
         autoClose: 2500,
         hideProgressBar: false,
@@ -325,7 +325,7 @@ export function RegistrarMarca({ho, setHo}){
         });
      }
      else if(pssword.current.value.length<5){
-      toast.warn("la password debe tener como minimo 5 caracteres", {
+      toast.warn("la Contraseña debe tener como minimo 5 caracteres", {
         position: "bottom-right",
         autoClose: 2500,
         hideProgressBar: false,
@@ -489,7 +489,7 @@ export function Registrarse({ho, setHo}){
       });
    }
    else if(confirmacion.current.value!==pssword.current.value){
-    toast.warn("las password no coinciden", {
+    toast.warn("las Contraseña no coinciden", {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
@@ -501,7 +501,7 @@ export function Registrarse({ho, setHo}){
       });
    }
    else if(pssword.current.value.length<5){
-    toast.warn("la password debe tener como minimo 5 caracteres", {
+    toast.warn("la Contraseña debe tener como minimo 5 caracteres", {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,

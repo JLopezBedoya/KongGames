@@ -1,22 +1,25 @@
-import { useSelector} from 'react-redux';
 import React, { useRef, useState } from 'react';
+import {  AdminNavBar, MarcaNavBar } from './navbar';
 import { filtro, titulo, navStart } from './inicio';
+import { ToastContainer, toast } from 'react-toastify';
+import { useSelector} from 'react-redux';
+import {checkImage} from './login'
+import { useGet } from './hooks/useGet';
+
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Container from 'react-bootstrap/Container';
-import fondo from './assets/KsBodega.png';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import fondo from './assets/KsBodega.png';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Modal from 'react-bootstrap/Modal';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
-import {  AdminNavBar, MarcaNavBar } from './navbar';
-import {checkImage} from './login'
 import im from './assets/ksLogin.png'
-import { useGet } from './hooks/useGet';
-import { ToastContainer, toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
+
 const compra = {
     height: "480px",
     width: "300px",

@@ -1,16 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { filtro, titulo, navStart } from './inicio';
+import { ToastContainer, toast } from 'react-toastify';
 import { remove, clear } from './redux/carritoslice';
 import { UserNavBar } from './navbar';
+
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Container from 'react-bootstrap/Container';
-import fondo from './assets/ksCarrito.png';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import fondo from './assets/ksCarrito.png';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { ToastContainer, toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
+
 const compra = {
     height: "200px",
     width: "700px",
